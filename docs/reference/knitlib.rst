@@ -1,0 +1,5 @@
+knitlib
+=============================
+
+.. automodule:: knitlib
+    :members:
