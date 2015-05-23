@@ -3,6 +3,9 @@
 # C extensions
 *.so
 
+# Compiled python modules
+*.pyc
+
 # Packages
 *.egg
 *.egg-info
