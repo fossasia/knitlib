@@ -2,8 +2,8 @@
 knitlib
 ===============================
 
-| |docs| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
-| |version| |downloads| |wheel| |supported-versions| |supported-implementations|
+.. | |docs| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
+.. | |version| |downloads| |wheel| |supported-versions| |supported-implementations|
 
 .. |docs| image:: https://readthedocs.org/projects/knitlib/badge/?style=flat
     :target: https://readthedocs.org/projects/knitlib
@@ -51,7 +51,7 @@ knitlib
 
 A library designed to support the operation of varied knitting machines, mechanisms, and hacks.
 
-* Free software: GPLv3+ license
+Free software: GPLv3+ license
 
 Installation
 ============
@@ -63,7 +63,7 @@ Installation
 Documentation
 =============
 
-https://knitlib.readthedocs.org/
+..  https://knitlib.readthedocs.org/
 
 Development
 ===========
