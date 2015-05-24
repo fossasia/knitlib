@@ -62,7 +62,7 @@ class optional_build_ext(build_ext):
 setup(
     name='knitlib',
     version='0.0.1',
-    license='BSD',
+    license='GPLv3',
     description='A library designed to support varied knitting machines.',
     long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
     author='Sebastian Oliva , Shiluka Dharmasena',
