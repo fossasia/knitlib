@@ -55,11 +55,11 @@ Projects like Ayab and Knitic access knitting machines. The AYAB has already cre
 
 Free software: GPLv3+ license
 
-Installation
+Development Installation
 ============
 
 ::
-
+    pip install -r requirements.txt
     pip install knitlib
 
 Documentation

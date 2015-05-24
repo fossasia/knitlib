@@ -13,4 +13,5 @@ def main(names):
     click.echo(repr(names))
 
 if __name__ == "__main__":
+    print("")
     sys.exit(main())
