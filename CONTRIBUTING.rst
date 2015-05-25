@@ -21,8 +21,8 @@ knitlib could always use more documentation, whether as part of the
 official knitlib docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
-Feature requests and feedback
-=============================
+Feature requests, bug reports, and feedback
+===========================================
 
 The best way to send feedback is to file an issue at https://github.com/fashiontec/knitlib/issues.
 
@@ -59,6 +59,11 @@ To set up `knitlib` for local development:
     git push origin name-of-your-bugfix-or-feature
 
 6. Submit a pull request through the GitHub website.
+7. Assign some one to review the code, somebody who is familiar with the architecture. Or some of the other students involved.
+8. Handle the code changes required by the reviewer, discuss alternative ways etc.
+9. Clean up, reduce commits for the entire stuff done via the PR (Squashing Commits - http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html)
+11. Ensure it runs tests.
+10. Once the PR (Pull Request) is green (reviewer says OK or LGTM), merge the PR and delete the branch.
 
 Pull Request Guidelines
 -----------------------
@@ -73,7 +78,7 @@ For merging, you should:
 4. Add yourself to ``AUTHORS.rst``.
 
 .. [1] If you don't have all the necessary python versions available locally you can rely on Travis - it will 
-       `run the tests <https://travis-ci.org/tian2992/knitlib/pull_requests>`_ for each change you add in the pull request.
+       `run the tests <https://travis-ci.org/fashiontec/knitlib/pull_requests>`_ for each change you add in the pull request.
        
        It will be slower though ...
        
