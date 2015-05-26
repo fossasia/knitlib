@@ -2,6 +2,7 @@
 import logging
 import knitting_plugin
 
+
 class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
 
   base_log_string = "{} has been called on dummy knitting plugin."
