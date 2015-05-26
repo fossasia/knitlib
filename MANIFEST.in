@@ -17,5 +17,6 @@ include LICENSE
 include README.rst
 
 include tox.ini .travis.yml appveyor.yml
+include requirements.txt
 
 global-exclude *.py[cod] __pycache__ *.so
