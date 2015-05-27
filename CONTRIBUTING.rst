@@ -85,10 +85,12 @@ For merging, you should:
 Tips
 ----
 
-To run a subset of tests::
+* To run a subset of tests::
 
     tox -e envname -- py.test -k test_myfeature
 
-To run all the test environments in *parallel* (you need to ``pip install detox``)::
+* To run all the test environments in *parallel* (you need to ``pip install detox``)::
 
     detox
+    
+* Please check the `Google Python coding guidelines <https://google-styleguide.googlecode.com/svn/trunk/pyguide.html>`_, it has good advices in order to write properly structured code.
