@@ -7,8 +7,6 @@ from knitlib.plugins import knitting_plugin
 from knitlib.plugins import dummy_plugin
 
 
-
-
 def test_methods_exception():
   """Tests that abstract methods from BaseKnittingPlugin throw exceptions.
 
@@ -23,7 +21,6 @@ def test_methods_exception():
 
 def test_dummy_plugin():
   """Tests that dummy plugin flows as expected in ideal conditions."""
-
   knit_machine = dummy_plugin.DummyKnittingPlugin()
   knit_machine.configure(None)
   knit_machine.knit()
