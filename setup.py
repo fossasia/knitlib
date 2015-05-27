@@ -97,8 +97,8 @@ setup(
     install_requires=[
         'click',
         'fysom',
-        'pyserial'
-
+        'pyserial',
+        'enum34'
     ],
     extras_require={
         # eg: 'rst': ['docutils>=0.11'],
