@@ -11,9 +11,9 @@ machine at once.
 
 def get_machines_by_type(machine_type):
   """Returns a list of the available plugins for a given PluginType or empty array if none found."""
-  return plugins.active_plugins.get(machine_type, [])
+  return plugins.active_plugins.get(machine_type, {})
 
 
 def get_machine_types():
-  """Returns a list of all the enum values of Existing Machine Plugin types."""
-  return list(plugins.PluginType)
+  """Returns the PluginType Enum."""
+  return plugins.PluginType
