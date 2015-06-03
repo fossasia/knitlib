@@ -5,6 +5,9 @@ import knitting_plugin
 
 class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
 
+  def __init__(self):
+    super(DummyKnittingPlugin, self).__init__()
+
   base_log_string = "{} has been called on dummy knitting plugin."
 
   def onknit(self, e):
