@@ -30,6 +30,7 @@ from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
 import serial.tools.list_ports
 
 
+
 class AyabPluginControl(BaseKnittingPlugin):
 
   def onknit(self, e):
@@ -121,41 +122,6 @@ class AyabPluginControl(BaseKnittingPlugin):
     pass
     #self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
 
-  def setup_ui(self, parent_ui):
-    """Sets up UI elements from ayab_options.Ui_DockWidget in parent_ui."""
-    self.set_translator()
-    #self.__parent_ui = parent_ui
-    #self.options_ui = Ui_DockWidget()
-    self.dock = parent_ui.ui.knitting_options_dock  # findChild(QtGui.QDockWidget, "knitting_options_dock")
-    #self.options_ui.setupUi(self.dock)
-    self.setup_behaviour_ui()
-
-  def set_translator(self):
-    dirname = os.path.dirname(__file__)
-    self.translator = QtCore.QTranslator()
-    self.translator.load(QtCore.QLocale.system(), "ayab_options", ".", dirname, ".qm")
-    app = QtCore.QCoreApplication.instance()
-    app.installTranslator(self.translator)
-
-  def unset_translator(self):
-    app = QtCore.QCoreApplication.instance()
-    app.removeTranslator(self.translator)
-
-  def populate_ports(self, combo_box=None, port_list=None):
-    if not combo_box:
-      pass
-      # combo_box = self.__parent_ui.findChild(QtGui.QComboBox, "serial_port_dropdown")
-    if not port_list:
-      port_list = self.getSerialPorts()
-
-    combo_box.clear()
-
-    def populate(combo_box, port_list):
-      for item in port_list:
-        #TODO: should display the info of the device.
-        combo_box.addItem(item[0])
-    populate(combo_box, port_list)
-
 
   def setup_behaviour_ui(self):
     """Connects methods to UI elements."""
@@ -168,7 +134,7 @@ class AyabPluginControl(BaseKnittingPlugin):
     #refresh_ports.click.connect(self.populate_ports)
 
 
-  def get_configuration_from_ui(self, ui):
+  def generate_test_configuration(self):
     """Creates a configuration dict from the ui elements.
 
     Returns:
@@ -177,42 +143,39 @@ class AyabPluginControl(BaseKnittingPlugin):
     """
 
     self.conf = {}
-    color_line_text = ui.findChild(QtGui.QSpinBox, "color_edit").value()
-    self.conf["num_colors"] = int(color_line_text)
-    start_line_text = ui.findChild(QtGui.QSpinBox, "start_line_edit").value()
-    self.conf["start_line"] = int(start_line_text)
+    self.conf[u"num_colors"] = int(2)
+    self.conf[u"start_line"] = int(0)
 
-    start_needle_color = ui.findChild(QtGui.QComboBox, "start_needle_color").currentText()
-    start_needle_text = ui.findChild(QtGui.QSpinBox, "start_needle_edit").value()
+    start_needle_color = u"orange"
+    start_needle_value = 0
 
-    if(start_needle_color == "orange"):
-      self.conf["start_needle"] = 100 - int(start_needle_text)
-    elif(start_needle_color == "green"):
-      self.conf["start_needle"] = 99 + int(start_needle_text)
+    stop_needle_color = u"orange"
+    stop_needle_value = 0
 
-    stop_needle_color = ui.findChild(QtGui.QComboBox, "stop_needle_color").currentText()
-    stop_needle_text = ui.findChild(QtGui.QSpinBox, "stop_needle_edit").value()
+    def set_value_by_color(conf_dict, needle_position, needle_color, start_needle_value):
+        if start_needle_color == u"orange":
+            conf_dict[needle_position] = 100 - start_needle_value
+        elif start_needle_color == u"green":
+            conf_dict[needle_position] = 99 + start_needle_value
+        else:
+            conf_dict[needle_position] = start_needle_value
+        return conf_dict
 
-    if(stop_needle_color == "orange"):
-      self.conf["stop_needle"] = 100 - int(stop_needle_text)
-    elif(stop_needle_color == "green"):
-      self.conf["stop_needle"] = 99 + int(stop_needle_text)
+    self.conf = set_value_by_color(self.conf, u"start_needle", "orange", start_needle_value)
+    self.conf = set_value_by_color(self.conf, u"stop_needle", "orange", start_needle_value)
 
+    # alignment_text = ui.findChild(QtGui.QComboBox, "alignment_combo_box").currentText()
+    self.conf["alignment"] = "center"
 
-    alignment_text = ui.findChild(QtGui.QComboBox, "alignment_combo_box").currentText()
-    self.conf["alignment"] = alignment_text
+    self.conf["inf_repeat"] = 0
 
-    self.conf["inf_repeat"] = \
-        int(ui.findChild(QtGui.QCheckBox, "infRepeat_checkbox").isChecked())
+    self.conf["machine_type"] = "single"
 
-    machine_type_text = ui.findChild(QtGui.QComboBox, "machine_type_box").currentText()
-    self.conf["machine_type"] = str(machine_type_text)
-
-    serial_port_text = ui.findChild(QtGui.QComboBox, "serial_port_dropdown").currentText()
-    self.conf["portname"] = str(serial_port_text)
+    serial_port = u""
+    self.conf["portname"] = u"" # Should be related to self.getSerialPorts()[0][0]
     # getting file location from textbox
-    filename_text = ui.findChild(QtGui.QLineEdit, "filename_lineedit").text()
-    self.conf["filename"] = str(filename_text)
+    filename_text = u""
+    self.conf["filename"] = filename_text
     logging.debug(self.conf)
     ## Add more config options.
     return self.conf
@@ -416,7 +379,7 @@ class AyabPluginControl(BaseKnittingPlugin):
               self.__ayabCom.cnf_line(reqestedLine, bytes, 0, crc8)
             else:
               self.__ayabCom.cnf_line(reqestedLine, bytes, lastLine, crc8)
-            
+
             # screen output
             msg = str((self.__image.imageExpanded())[indexToSend])
             msg += ' Image Row: ' + str(imgRow)
