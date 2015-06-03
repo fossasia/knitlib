@@ -98,7 +98,8 @@ setup(
         'click',
         'fysom',
         'pyserial',
-        'enum34'
+        'enum34',
+        'Pillow'
     ],
     extras_require={
         # eg: 'rst': ['docutils>=0.11'],
