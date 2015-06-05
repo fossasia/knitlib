@@ -44,6 +44,21 @@ class BaseKnittingPlugin(Fysom):
   def publish_options(self):
     raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format("publish_options must be defined. It is used to expose the possible knitting options."))
 
+  def validate_configuration(self, conf):
+        if conf.get("start_needle") and conf.get("stop_needle"):
+            if conf.get("start_needle") > conf.get("stop_needle"):
+                self.__notify_user("Invalid needle start and end.", "warning")
+                return False
+        if conf.get("start_line") > self.__image.imgHeight():
+            self.__notify_user("Start Line is larger than the image.")
+            return False
+
+        if conf.get("portname") == '':
+            self.__notify_user("Please choose a valid port.")
+            return False
+
+        return True
+
   def __init__(self, callbacks_dict=None):
     self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implment {0}"
 

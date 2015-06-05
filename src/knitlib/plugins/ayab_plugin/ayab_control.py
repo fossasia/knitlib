@@ -53,20 +53,6 @@ class AyabPluginControl(BaseKnittingPlugin):
 
         # Do Knit.
 
-    def validate_configuration(self, conf):
-        if conf.get("start_needle") and conf.get("stop_needle"):
-            if conf.get("start_needle") > conf.get("stop_needle"):
-                self.__notify_user("Invalid needle start and end.", "warning")
-                return False
-        if conf.get("start_line") > self.__image.imgHeight():
-            self.__notify_user("Start Line is larger than the image.")
-            return False
-
-        if conf.get("portname") == '':
-            self.__notify_user("Please choose a valid port.")
-            return False
-
-        return True
 
     def onfinish(self, e):
         logging.info("Finished Knitting.")
