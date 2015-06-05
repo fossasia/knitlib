@@ -33,16 +33,10 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def onconfigure(self, e):
         logging.debug("called onconfigure on AYAB Knitting Plugin")
-        # print ', '.join("%s: %s" % item for item in vars(e).items())
-        # FIXME: substitute setting parent_ui from self.__parent_ui
-        # self.__parent_ui = e.event.parent_ui
-        parent_ui = self.__parent_ui
 
         # Start to knit with the bottom first
-        pil_image = parent_ui.pil_image.rotate(180)
-
-        conf = self.get_configuration_from_ui(parent_ui)
-        # TODO: detect if previous conf had the same image to avoid re-generating.
+        # pil_image = self.pil_image.rotate(180)
+        pil_image = None
 
         try:
             self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
@@ -57,11 +51,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         if conf.get("start_line"):
             self.__image.setStartLine(conf.get("start_line"))
 
-        if self.validate_configuration(conf):
-            parent_ui.ui.widget_knitcontrol.setEnabled(True)
-            parent_ui.ui.knit_button.setEnabled(True)
-            self.__emit_progress(0, 0, self.__image.imgHeight())
-        return
+        # Do Knit.
 
     def validate_configuration(self, conf):
         if conf.get("start_needle") and conf.get("stop_needle"):
@@ -178,10 +168,10 @@ class AyabPluginControl(BaseKnittingPlugin):
         return list(serial.tools.list_ports.grep("USB"))
 
     def __init__(self):
-        super(BaseKnittingPlugin, self).__init__({})
+        super(AyabPluginControl, self).__init__()
         # KnittingPlugin.__init__(self)
 
-        # Copying from ayab_control
+        # From AYAB's ayab_control
         self.__API_VERSION = 0x03
         self.__ayabCom = AyabCommunication()
 
