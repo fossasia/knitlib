@@ -21,6 +21,8 @@ from ayab_communication import AyabCommunication
 import ayab_image
 import time
 import logging
+import os
+from PIL import Image
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
 import serial.tools.list_ports
 
@@ -36,12 +38,13 @@ class AyabPluginControl(BaseKnittingPlugin):
 
         # Start to knit with the bottom first
         # pil_image = self.pil_image.rotate(180)
-        pil_image = None
 
         #conf = e.event.conf
         #self.conf = e.event.conf
 
         conf = self.conf = self.generate_test_configuration()
+        script_dir = os.path.dirname(os.path.abspath(__file__)) # Temp fix for testing Image opening
+        pil_image = Image.open(os.path.join(script_dir, conf["filename"]))
 
         try:
             self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
@@ -89,7 +92,7 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def __notify_user(self, message="", message_type="info"):
         """Sends the display_pop_up_signal QtSignal to main GUI thread, not blocking it."""
-        logging.log(message_type, message)
+        logging.info(message)
         pass
         ## self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
 
@@ -143,7 +146,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         serial_port = u""
         self.conf["portname"] = u""  # Should be related to self.getSerialPorts()[0][0]
         # getting file location from textbox
-        filename_text = u""
+        filename_text = u"mushroom.png"
         self.conf["filename"] = filename_text
         logging.debug(self.conf)
         ## Add more config options.
