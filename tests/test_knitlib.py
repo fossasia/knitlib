@@ -31,5 +31,5 @@ def test_ayab_plugin():
     dummy_type = other_type_dict["AyabPluginControl"]()
 
     dummy_type.configure(None)
-    # dummy_type.knit()
-    # dummy_type.finish()
+    dummy_type.knit() # https://bitbucket.org/chris007de/ayab-apparat/wiki/english/Hardware#!nomachine-development-mode
+    dummy_type.finish()

@@ -38,6 +38,11 @@ class AyabPluginControl(BaseKnittingPlugin):
         # pil_image = self.pil_image.rotate(180)
         pil_image = None
 
+        #conf = e.event.conf
+        #self.conf = e.event.conf
+
+        conf = self.conf = self.generate_test_configuration()
+
         try:
             self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
         except:
@@ -96,13 +101,7 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def setup_behaviour_ui(self):
         """Connects methods to UI elements."""
-        # conf_button = self.options_ui.configure_button  # Used instead of findChild(QtGui.QPushButton, "configure_button")
-        # conf_button.clicked.connect(self.conf_button_function)
-
-
-        self.populate_ports()
-        # refresh_ports = self.options_ui.refresh_ports_button
-        # refresh_ports.click.connect(self.populate_ports)
+        pass
 
     def generate_test_configuration(self):
         """Creates a configuration dict from the ui elements.
