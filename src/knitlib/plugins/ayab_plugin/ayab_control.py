@@ -78,16 +78,19 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def __wait_for_user_action(self, message="", message_type="info"):
         """Sends the display_blocking_pop_up_signal QtSignal to main GUI thread, blocking it."""
+        time.sleep(3)
         pass
         ## self.__parent_ui.emit(QtCore.SIGNAL('display_blocking_pop_up_signal(QString, QString)'), message, message_type)
 
     def __notify_user(self, message="", message_type="info"):
         """Sends the display_pop_up_signal QtSignal to main GUI thread, not blocking it."""
+        logging.log(message_type, message)
         pass
         ## self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
 
     def __emit_progress(self, percent, done, total):
         """Sends the updateProgress QtSignal."""
+        logging.info("Knitting at {} \% . {} out of {}.".format(percent, done, total))
         pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
 
