@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 # This file is based on Ayab
+
 
 """Handles the serial communication protocol.
 """
@@ -22,15 +24,16 @@ class Communication(object):
     """Handles on delete behavior closing serial port object."""
     self.close_serial()
 
-  def open_serial(self, pPortname=None):
-    """Opens serial port communication with a portName."""
+  def open_serial(self, pPortname=None, baudrate=None):
+    """Opens serial port communication with a portName and baudrate."""
     if not self.__ser:
       self.__portname = pPortname
+      self.__baudrate = baudrate
       try:
-          self.__ser = serial.Serial(self.__portname, 115200)
+          self.__ser = serial.Serial(self.__portname, self.__baudrate)
           time.sleep(1)
       except:
-        self.__logger.error("could not open serial port " + self.__portname)
+        self.__logger.error("could not open serial port " + self.__portname + "with specific baudrate " + self.__baudrate)
         raise CommunicationException()
       return True
 
@@ -43,14 +46,6 @@ class Communication(object):
     except:
       #TODO: add message for closing serial failure.
       raise CommunicationException()
-
-  def read_line(self):
-    """Reads a line from serial communication."""
-    line = bytes()
-    if self.__ser:
-      while self.__ser.inWaiting() > 0:
-          line += self.__ser.read(1)
-    return line
 
 
 class CommunicationException(Exception):
