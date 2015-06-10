@@ -32,4 +32,5 @@ def test_ayab_plugin():
 
     dummy_type.configure(None)
     dummy_type.knit() # https://bitbucket.org/chris007de/ayab-apparat/wiki/english/Hardware#!nomachine-development-mode
-    dummy_type.finish()
+    if dummy_type.isstate("finished"):
+        dummy_type.finish()

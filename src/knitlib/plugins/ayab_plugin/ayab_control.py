@@ -86,7 +86,9 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def __wait_for_user_action(self, message="", message_type="info"):
         """Sends the display_blocking_pop_up_signal QtSignal to main GUI thread, blocking it."""
+        logging.info(message)
         time.sleep(3)
+        raw_input()
         pass
         ## self.__parent_ui.emit(QtCore.SIGNAL('display_blocking_pop_up_signal(QString, QString)'), message, message_type)
 
@@ -98,7 +100,7 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def __emit_progress(self, percent, done, total):
         """Sends the updateProgress QtSignal."""
-        logging.info("Knitting at {} \% . {} out of {}.".format(percent, done, total))
+        logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
         pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
 
@@ -144,7 +146,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         self.conf["machine_type"] = "single"
 
         serial_port = u""
-        self.conf["portname"] = u""  # Should be related to self.getSerialPorts()[0][0]
+        self.conf["portname"] = u"/dev/ttyACM0"  # Should be related to self.getSerialPorts()[0][0]
         # getting file location from textbox
         filename_text = u"mushroom.png"
         self.conf["filename"] = filename_text
