@@ -16,7 +16,9 @@ def test_methods_exception():
   knit_machine = knitting_plugin.BaseKnittingPlugin()
   with pytest.raises(NotImplementedError):
     knit_machine.configure()
+  with pytest.raises(NotImplementedError):
     knit_machine.knit()
+  with pytest.raises(NotImplementedError):
     knit_machine.finish()
 
 def test_dummy_plugin():
