@@ -12,8 +12,11 @@ def test_main():
     assert result.output == '()\n'
     assert result.exit_code == 0
 
+def test_machine_handler_get_machine_by_id():
+    machine = knitlib.machine_handler.get_machine_by_id("DummyKnittingPlugin")
+    assert machine.__name__ == "DummyKnittingPlugin"
 
-def test_getting_dummy_machine():
+def test_dummy_machine():
 
     mach_type = knitlib.machine_handler.get_machine_types().other
     other_type_dict = knitlib.machine_handler.get_machines_by_type(mach_type)
