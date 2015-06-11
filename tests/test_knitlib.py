@@ -12,8 +12,11 @@ def test_main():
     assert result.output == '()\n'
     assert result.exit_code == 0
 
+def test_machine_handler_get_machine_by_id():
+    machine = knitlib.machine_handler.get_machine_by_id("DummyKnittingPlugin")
+    assert machine.__name__ == "DummyKnittingPlugin"
 
-def test_getting_dummy_machine():
+def test_dummy_machine():
 
     mach_type = knitlib.machine_handler.get_machine_types().other
     other_type_dict = knitlib.machine_handler.get_machines_by_type(mach_type)
@@ -23,3 +26,12 @@ def test_getting_dummy_machine():
     dummy_type.configure(None)
     dummy_type.knit()
     dummy_type.finish()
+
+
+def test_ayab_plugin():
+    machine = knitlib.machine_handler.get_machine_by_id("AyabPluginControl")()
+
+    #dummy_type.configure(None)
+    #dummy_type.knit() # https://bitbucket.org/chris007de/ayab-apparat/wiki/english/Hardware#!nomachine-development-mode
+    #if dummy_type.isstate("finished"):
+    #    dummy_type.finish()

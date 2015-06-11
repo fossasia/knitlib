@@ -21,6 +21,8 @@ from ayab_communication import AyabCommunication
 import ayab_image
 import time
 import logging
+import os
+from PIL import Image
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
 import serial.tools.list_ports
 
@@ -33,16 +35,16 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def onconfigure(self, e):
         logging.debug("called onconfigure on AYAB Knitting Plugin")
-        # print ', '.join("%s: %s" % item for item in vars(e).items())
-        # FIXME: substitute setting parent_ui from self.__parent_ui
-        # self.__parent_ui = e.event.parent_ui
-        parent_ui = self.__parent_ui
 
         # Start to knit with the bottom first
-        pil_image = parent_ui.pil_image.rotate(180)
+        # pil_image = self.pil_image.rotate(180)
 
-        conf = self.get_configuration_from_ui(parent_ui)
-        # TODO: detect if previous conf had the same image to avoid re-generating.
+        #conf = e.event.conf
+        #self.conf = e.event.conf
+
+        conf = self.conf = self.generate_test_configuration()
+        script_dir = os.path.dirname(os.path.abspath(__file__)) # Temp fix for testing Image opening
+        pil_image = Image.open(os.path.join(script_dir, conf["filename"]))
 
         try:
             self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
@@ -57,26 +59,8 @@ class AyabPluginControl(BaseKnittingPlugin):
         if conf.get("start_line"):
             self.__image.setStartLine(conf.get("start_line"))
 
-        if self.validate_configuration(conf):
-            parent_ui.ui.widget_knitcontrol.setEnabled(True)
-            parent_ui.ui.knit_button.setEnabled(True)
-            self.__emit_progress(0, 0, self.__image.imgHeight())
-        return
+        # Do Knit.
 
-    def validate_configuration(self, conf):
-        if conf.get("start_needle") and conf.get("stop_needle"):
-            if conf.get("start_needle") > conf.get("stop_needle"):
-                self.__notify_user("Invalid needle start and end.", "warning")
-                return False
-        if conf.get("start_line") > self.__image.imgHeight():
-            self.__notify_user("Start Line is larger than the image.")
-            return False
-
-        if conf.get("portname") == '':
-            self.__notify_user("Please choose a valid port.")
-            return False
-
-        return True
 
     def onfinish(self, e):
         logging.info("Finished Knitting.")
@@ -100,30 +84,43 @@ class AyabPluginControl(BaseKnittingPlugin):
         logging.error("Error while Knitting.")
         self.__close_serial()
 
+    def validate_configuration(self, conf):
+        if conf.get("start_needle") and conf.get("stop_needle"):
+            if conf.get("start_needle") > conf.get("stop_needle"):
+                self.__notify_user("Invalid needle start and end.", "warning")
+                return False
+        if conf.get("start_line") > self.__image.imgHeight():
+            self.__notify_user("Start Line is larger than the image.")
+            return False
+
+        if conf.get("portname") == '':
+            self.__notify_user("Please choose a valid port.")
+            return False
+        return True
+
     def __wait_for_user_action(self, message="", message_type="info"):
         """Sends the display_blocking_pop_up_signal QtSignal to main GUI thread, blocking it."""
+        logging.info(message)
+        time.sleep(3)
+        raw_input()
         pass
         ## self.__parent_ui.emit(QtCore.SIGNAL('display_blocking_pop_up_signal(QString, QString)'), message, message_type)
 
     def __notify_user(self, message="", message_type="info"):
         """Sends the display_pop_up_signal QtSignal to main GUI thread, not blocking it."""
+        logging.info(message)
         pass
         ## self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
 
     def __emit_progress(self, percent, done, total):
         """Sends the updateProgress QtSignal."""
+        logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
         pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
 
     def setup_behaviour_ui(self):
         """Connects methods to UI elements."""
-        # conf_button = self.options_ui.configure_button  # Used instead of findChild(QtGui.QPushButton, "configure_button")
-        # conf_button.clicked.connect(self.conf_button_function)
-
-
-        self.populate_ports()
-        # refresh_ports = self.options_ui.refresh_ports_button
-        # refresh_ports.click.connect(self.populate_ports)
+        pass
 
     def generate_test_configuration(self):
         """Creates a configuration dict from the ui elements.
@@ -163,9 +160,9 @@ class AyabPluginControl(BaseKnittingPlugin):
         self.conf["machine_type"] = "single"
 
         serial_port = u""
-        self.conf["portname"] = u""  # Should be related to self.getSerialPorts()[0][0]
+        self.conf["portname"] = u"/dev/ttyACM0"  # Should be related to self.getSerialPorts()[0][0]
         # getting file location from textbox
-        filename_text = u""
+        filename_text = u"mushroom.png"
         self.conf["filename"] = filename_text
         logging.debug(self.conf)
         ## Add more config options.
@@ -178,10 +175,10 @@ class AyabPluginControl(BaseKnittingPlugin):
         return list(serial.tools.list_ports.grep("USB"))
 
     def __init__(self):
-        super(BaseKnittingPlugin, self).__init__({})
+        super(AyabPluginControl, self).__init__()
         # KnittingPlugin.__init__(self)
 
-        # Copying from ayab_control
+        # From AYAB's ayab_control
         self.__API_VERSION = 0x03
         self.__ayabCom = AyabCommunication()
 

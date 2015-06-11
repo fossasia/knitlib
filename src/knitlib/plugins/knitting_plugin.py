@@ -44,13 +44,35 @@ class BaseKnittingPlugin(Fysom):
   def publish_options(self):
     raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format("publish_options must be defined. It is used to expose the possible knitting options."))
 
-  def __init__(self, callbacks_dict=None):
+  def validate_configuration(self, conf):
+    raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format("validate_configuration must be defined. It verifies configurations are valid."))
+
+  def register_interactive_callbacks(self, callbacks=None):
+    """Serves to register a dict of callbacks that require interaction by the User,
+
+     Interactive callbacks serve to block operation until a human acts on them. Interactive callbacks can include
+     physical operations (set needles, move knob, flip switch), decisions (yes/no or cancel), or simply human
+     acknowledgement.
+
+     Args:
+        callbacks: keys can be info, warning, progress, error.
+
+     """
+    if callbacks is None:
+      callbacks = {}
+    self.interactive_callbacks = callbacks
+
+  def __init__(self, callbacks_dict=None, interactive_callbacks=None):
     self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implment {0}"
+
+    if interactive_callbacks is None:
+        self.interactive_callbacks = {}
+    else:
+        self.interactive_callbacks = interactive_callbacks
 
     if callbacks_dict is None:
       callbacks_dict = {
           'onknit': self.onknit,
-          # 'onknitting': self.onknitting,
           'onconfigure': self.onconfigure,
           'onfinish': self.onfinish,
       }
