@@ -1,3 +1,6 @@
+.. image:: https://badge.waffle.io/fashiontec/knitlib.png?label=ready&title=Ready 
+ :target: https://waffle.io/fashiontec/knitlib
+ :alt: 'Stories in Ready'
 ===============================
 knitlib
 ===============================
