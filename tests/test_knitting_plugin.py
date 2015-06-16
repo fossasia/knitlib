@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 import pytest
 
 import knitlib
@@ -31,4 +31,3 @@ def test_dummy_plugin():
 def test_machine_handler_get_machines():
   for machine_type in list(machine_handler.get_machine_types()):
     assert machine_handler.get_machines_by_type(machine_type) == knitlib.plugins.active_plugins.get(machine_type, {})
-

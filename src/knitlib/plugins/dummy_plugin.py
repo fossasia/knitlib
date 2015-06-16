@@ -1,9 +1,11 @@
-
+# -*- coding: utf-8 -*-
 import logging
+import time
 import knitting_plugin
 
 
 class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
+  """Implements a sample knitting plugin that allows for simple operation emulation."""
 
   def __init__(self):
     super(DummyKnittingPlugin, self).__init__()
@@ -13,6 +15,9 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
 
   def onknit(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onknit"))
+    #in order to simulate blocking
+    #time.sleep(10)
+    time.sleep(1)
 
   def onfinish(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onfinish"))
@@ -46,8 +51,3 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
         "progress": DummyKnittingPlugin.__log_progress
     }
     super(DummyKnittingPlugin, self).register_interactive_callbacks(callbacks)
-
-
-
-
-

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import dummy_plugin
 import ayab_plugin
 
