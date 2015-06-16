@@ -17,7 +17,7 @@ def get_machines_by_type(machine_type):
 def get_machine_plugin_by_id(machine_id):
   """Returns a machine plugin given the machine_id class name."""
   for k, v in plugins.active_plugins.items():
-    if v in machine_id:
+    if machine_id in v:
       return v[machine_id]
 
 
