@@ -5,6 +5,7 @@ knitlib
 
 .. | |docs| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
 .. | |version| |downloads| |wheel| |supported-versions| |supported-implementations|
+| |travis|
 
 .. image:: https://badge.waffle.io/fashiontec/knitlib.png?label=ready&title=Ready
     :target: https://waffle.io/fashiontec/knitlib
@@ -14,9 +15,9 @@ knitlib
     :target: https://readthedocs.org/projects/knitlib
     :alt: Documentation Status
 
-.. # |travis| image:: http://img.shields.io/travis/tian2992/knitlib/master.png?style=flat
+..  |travis| image:: http://img.shields.io/travis/fashiontec/knitlib/master.png?style=flat
     :alt: Travis-CI Build Status
-    :target: https://travis-ci.org/tian2992/knitlib
+    :target: https://travis-ci.org/fashiontec/knitlib
 
 .. # |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/tian2992/knitlib?branch=master
     :alt: AppVeyor Build Status
