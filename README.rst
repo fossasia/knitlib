@@ -1,12 +1,14 @@
-.. image:: https://badge.waffle.io/fashiontec/knitlib.png?label=ready&title=Ready 
- :target: https://waffle.io/fashiontec/knitlib
- :alt: 'Stories in Ready'
+
 ===============================
 knitlib
 ===============================
 
 .. | |docs| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
 .. | |version| |downloads| |wheel| |supported-versions| |supported-implementations|
+
+.. image:: https://badge.waffle.io/fashiontec/knitlib.png?label=ready&title=Ready
+    :target: https://waffle.io/fashiontec/knitlib
+    :alt: 'Stories in Ready'
 
 .. # |docs| image:: https://readthedocs.org/projects/knitlib/badge/?style=flat
     :target: https://readthedocs.org/projects/knitlib
@@ -61,8 +63,7 @@ Free software: GPLv3+ license
 Development Installation
 ========================
 
-::
-    pip install -r requirements.txt  
+    pip install -r requirements.txt
     pip install knitlib
 
 Documentation
