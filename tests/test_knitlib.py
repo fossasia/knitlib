@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 from click.testing import CliRunner
 import knitlib
 from knitlib.__main__ import main
@@ -13,7 +13,7 @@ def test_main():
     assert result.exit_code == 0
 
 def test_machine_handler_get_machine_by_id():
-    machine = knitlib.machine_handler.get_machine_by_id("DummyKnittingPlugin")
+    machine = knitlib.machine_handler.get_machine_plugin_by_id("DummyKnittingPlugin")
     assert machine.__name__ == "DummyKnittingPlugin"
 
 def test_dummy_machine():
@@ -29,9 +29,9 @@ def test_dummy_machine():
 
 
 def test_ayab_plugin():
-    machine = knitlib.machine_handler.get_machine_by_id("AyabPluginControl")()
+    machine = knitlib.machine_handler.get_machine_plugin_by_id("AyabPluginControl")()
 
     #dummy_type.configure(None)
     #dummy_type.knit() # https://bitbucket.org/chris007de/ayab-apparat/wiki/english/Hardware#!nomachine-development-mode
     #if dummy_type.isstate("finished"):
-    #    dummy_type.finish()
+    #    dummy_type.finish()+
