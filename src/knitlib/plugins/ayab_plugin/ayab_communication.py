@@ -43,12 +43,12 @@ class AyabCommunication(object):
     """Handles on delete behaviour closing serial port object."""
     self.close_serial()
 
-  def open_serial(self, pPortname=None, portSpeed = 115200):
+  def open_serial(self, serial_port_name=None, serial_port_speed=115200):
     """Opens serial port communication with a portName."""
     if not self.__ser:
-      self.__portname = pPortname
+      self.__portname = serial_port_name
       try:
-          self.__ser = serial.Serial(self.__portname, portSpeed)
+          self.__ser = serial.Serial(self.__portname, serial_port_speed)
           time.sleep(1)
       except:
         self.__logger.error("could not open serial port " + self.__portname)
@@ -65,7 +65,7 @@ class AyabCommunication(object):
       del(self.__ser)
       self.__ser = None
     except:
-      #TODO: add message for closing serial failure.
+      # TODO: add message for closing serial failure.
       raise CommunicationException()
 
   def read_line(self):

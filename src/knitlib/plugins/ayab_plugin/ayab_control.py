@@ -39,11 +39,11 @@ class AyabPluginControl(BaseKnittingPlugin):
         # Start to knit with the bottom first
         # pil_image = self.pil_image.rotate(180)
 
-        #conf = e.event.conf
-        #self.conf = e.event.conf
+        # conf = e.event.conf
+        # self.conf = e.event.conf
 
         conf = self.conf = self.generate_test_configuration()
-        script_dir = os.path.dirname(os.path.abspath(__file__)) # Temp fix for testing Image opening
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Temp fix for testing Image opening
         pil_image = Image.open(os.path.join(script_dir, conf["filename"]))
 
         try:
@@ -59,8 +59,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         if conf.get("start_line"):
             self.__image.setStartLine(conf.get("start_line"))
 
-        # Do Knit.
-
+            # Do Knit.
 
     def onfinish(self, e):
         logging.info("Finished Knitting.")
@@ -99,21 +98,24 @@ class AyabPluginControl(BaseKnittingPlugin):
         return True
 
     def __wait_for_user_action(self, message="", message_type="info"):
-        """Sends the display_blocking_pop_up_signal QtSignal to main GUI thread, blocking it."""
+        """Waits for the user to react, blocking it."""
+        # TODO: should be replaced by self.interactive_callbacks["user_action"]
         logging.info(message)
         time.sleep(3)
         raw_input()
         pass
-        ## self.__parent_ui.emit(QtCore.SIGNAL('display_blocking_pop_up_signal(QString, QString)'), message, message_type)
+        # self.__parent_ui.emit(QtCore.SIGNAL('display_blocking_pop_up_signal(QString, QString)'), message, message_type)
 
     def __notify_user(self, message="", message_type="info"):
         """Sends the display_pop_up_signal QtSignal to main GUI thread, not blocking it."""
+        # TODO: should be replaced by self.interactive_callbacks["info"]
         logging.info(message)
         pass
-        ## self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
+        # self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
 
     def __emit_progress(self, percent, done, total):
-        """Sends the updateProgress QtSignal."""
+        """Shows the current job progress."""
+        # TODO: should be replaced by self.interactive_callbacks["progress"]
         logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
         pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
@@ -131,41 +133,35 @@ class AyabPluginControl(BaseKnittingPlugin):
         """
 
         self.conf = {}
-        self.conf[u"num_colors"] = int(2)
-        self.conf[u"start_line"] = int(0)
+        self.conf[u"num_colors"] = 2
+        self.conf[u"start_line"] = 0
 
-        start_needle_color = u"orange"
-        start_needle_value = 0
-
-        stop_needle_color = u"orange"
-        stop_needle_value = 0
+        start_needle_color = stop_needle_color = u"orange"  # or green.
+        start_needle_value = stop_needle_value = 0
 
         def set_value_by_color(conf_dict, needle_position, needle_color, start_needle_value):
-            if start_needle_color == u"orange":
+            if needle_color == u"orange":
                 conf_dict[needle_position] = 100 - start_needle_value
-            elif start_needle_color == u"green":
+            elif needle_color == u"green":
                 conf_dict[needle_position] = 99 + start_needle_value
             else:
                 conf_dict[needle_position] = start_needle_value
             return conf_dict
 
-        self.conf = set_value_by_color(self.conf, u"start_needle", "orange", start_needle_value)
-        self.conf = set_value_by_color(self.conf, u"stop_needle", "orange", start_needle_value)
+        self.conf = set_value_by_color(self.conf, u"start_needle", start_needle_color, start_needle_value)
+        self.conf = set_value_by_color(self.conf, u"stop_needle", stop_needle_color, stop_needle_value)
 
-        # alignment_text = ui.findChild(QtGui.QComboBox, "alignment_combo_box").currentText()
         self.conf["alignment"] = "center"
-
         self.conf["inf_repeat"] = 0
-
         self.conf["machine_type"] = "single"
 
-        serial_port = u""
-        self.conf["portname"] = u"/dev/ttyACM0"  # Should be related to self.getSerialPorts()[0][0]
+        serial_port = u"/dev/ttyACM0"
+        self.conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
         # getting file location from textbox
         filename_text = u"mushroom.png"
         self.conf["filename"] = filename_text
         logging.debug(self.conf)
-        ## Add more config options.
+        # TODO: Add more config options.
         return self.conf
 
     def getSerialPorts(self):
@@ -188,7 +184,7 @@ class AyabPluginControl(BaseKnittingPlugin):
     def __del__(self):
         self.__close_serial()
 
-    ###Copied from ayab_control
+    # From ayab_control
     #####################################
 
     def __setBit(self, int_type, offset):
@@ -250,19 +246,16 @@ class AyabPluginControl(BaseKnittingPlugin):
             reqestedLine = lineNumber
 
             # adjust lineNumber with current block
-            lineNumber = lineNumber \
-                         + (self.__lineBlock * 256)
+            lineNumber = lineNumber + (self.__lineBlock * 256)
 
-            # when knitting infinitely, keep the requested 
-            # lineNumber in its limits
+            # when knitting infinitely, keep the requested lineNumber in its limits
             if self.__infRepeat:
                 lineNumber = lineNumber % imgHeight
 
             #########################
             # decide which line to send according to machine type and amount of colors
             # singlebed, 2 color
-            if self.__machineType == 'single' \
-                    and self.__numColors == 2:
+            if self.__machineType == 'single' and self.__numColors == 2:
 
                 # color is always 0 in singlebed,
                 # because both colors are knitted at once
@@ -355,7 +348,7 @@ class AyabPluginControl(BaseKnittingPlugin):
             for col in range(0, self.__image.imgWidth()):
                 pxl = (self.__image.imageExpanded())[indexToSend][col]
                 # take the image offset into account
-                if pxl == True and sendBlankLine == False:
+                if pxl is True and sendBlankLine is False:
                     bytes = self.__setPixel(
                         bytes, col + self.__image.imgStartNeedle())
 

@@ -15,9 +15,8 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
 
   def onknit(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onknit"))
-    #in order to simulate blocking
-    #time.sleep(10)
-    time.sleep(1)
+    # In order to simulate blocking we make it sleep.
+    time.sleep(3)
 
   def onfinish(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onfinish"))
@@ -46,6 +45,7 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
   def register_interactive_callbacks(self):
     callbacks = {
         "info": DummyKnittingPlugin.__interactive_info,
+        "user_action": DummyKnittingPlugin.__interactive_info,
         "warning": DummyKnittingPlugin.__interactive_warn,
         "error": DummyKnittingPlugin.__interactive_error,
         "progress": DummyKnittingPlugin.__log_progress
