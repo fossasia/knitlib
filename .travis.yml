@@ -23,7 +23,7 @@ before_install:
   - uname -a
   - lsb_release -a
 install:
-  - pip --update pip
+  - pip install --update pip
   - pip install tox flake8
 script:
   - tox -v
