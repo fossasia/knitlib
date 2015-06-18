@@ -9,7 +9,7 @@ def test_main():
     runner = CliRunner()
     result = runner.invoke(main, [])
 
-    assert result.output == '()\n'
+    assert result.output is not '()\n'
     assert result.exit_code == 0
 
 def test_machine_handler_get_machine_by_id():
