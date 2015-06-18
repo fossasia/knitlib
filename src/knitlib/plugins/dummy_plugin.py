@@ -16,7 +16,9 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
   def onknit(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onknit"))
     # In order to simulate blocking we make it sleep.
-    time.sleep(3)
+    for i in range(5):
+      time.sleep(1)
+      print("Knitted line: {}".format(i))
 
   def onfinish(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onfinish"))
