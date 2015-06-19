@@ -13,7 +13,7 @@ import knitlib
               help='The name of the Machine Plugin you want.')
 @click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, int]))
 def main(plugin_name, config):
-    plugin = knitlib.machine_handler.get_machine_plugin_by_id(plugin_name)  # should be plugin_name
+    plugin = knitlib.machine_handler.get_machine_plugin_by_id(plugin_name)
     machine_instance = plugin()
     machine_instance.configure(config)
     machine_instance.knit()
