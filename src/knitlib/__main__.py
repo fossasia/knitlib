@@ -19,7 +19,5 @@ def main(plugin_name, config):
     machine_instance.knit()
     machine_instance.finish()
 
-    # click.echo(repr(names))
-
 if __name__ == "__main__":
     sys.exit(main())
