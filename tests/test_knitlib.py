@@ -17,7 +17,7 @@ def test_main():
 @mock.patch('knitlib.plugins.dummy_plugin.logging')
 def test_dummy_knit(mock_logging):
     runner = CliRunner()
-    result = runner.invoke(main, ["--plugin_name","DummyKnittingPlugin"])
+    result = runner.invoke(main, ["--plugin_name", "DummyKnittingPlugin"])
 
     assert mock_logging.debug.assert_called()
 
