@@ -35,14 +35,25 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def onconfigure(self, e):
         logging.debug("called onconfigure on AYAB Knitting Plugin")
+        logging.debug("With args: {}".format(e.args))
+        logging.debug("With conf kwarg: {}".format(e.conf))
 
         # Start to knit with the bottom first
         # pil_image = self.pil_image.rotate(180)
 
         # conf = e.event.conf
         # self.conf = e.event.conf
+        if hasattr(e, "conf"):
+            if len(e.conf) == 0:
+                conf = self.generate_test_configuration()
+            else:
+                conf = e.conf
+        else:
+            conf = self.generate_test_configuration()
 
-        conf = self.conf = self.generate_test_configuration()
+        self.conf = conf
+        logging.debug("Working with final conf: {}".format(e.conf))
+
         script_dir = os.path.dirname(os.path.abspath(__file__))  # Temp fix for testing Image opening
         pil_image = Image.open(os.path.join(script_dir, conf["filename"]))
 
@@ -132,9 +143,9 @@ class AyabPluginControl(BaseKnittingPlugin):
 
         """
 
-        self.conf = {}
-        self.conf[u"num_colors"] = 2
-        self.conf[u"start_line"] = 0
+        conf = {}
+        conf[u"num_colors"] = 2
+        conf[u"start_line"] = 0
 
         start_needle_color = stop_needle_color = u"orange"  # or green.
         start_needle_value = stop_needle_value = 0
@@ -148,21 +159,21 @@ class AyabPluginControl(BaseKnittingPlugin):
                 conf_dict[needle_position] = start_needle_value
             return conf_dict
 
-        self.conf = set_value_by_color(self.conf, u"start_needle", start_needle_color, start_needle_value)
-        self.conf = set_value_by_color(self.conf, u"stop_needle", stop_needle_color, stop_needle_value)
+        conf = set_value_by_color(conf, u"start_needle", start_needle_color, start_needle_value)
+        conf = set_value_by_color(conf, u"stop_needle", stop_needle_color, stop_needle_value)
 
-        self.conf["alignment"] = "center"
-        self.conf["inf_repeat"] = 0
-        self.conf["machine_type"] = "single"
+        conf["alignment"] = "center"
+        conf["inf_repeat"] = 0
+        conf["machine_type"] = "single"
 
         serial_port = u"/dev/ttyACM0"
-        self.conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
+        conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
         # getting file location from textbox
         filename_text = u"mushroom.png"
-        self.conf["filename"] = filename_text
-        logging.debug(self.conf)
+        conf["filename"] = filename_text
+        logging.debug(conf)
         # TODO: Add more config options.
-        return self.conf
+        return conf
 
     def getSerialPorts(self):
         """

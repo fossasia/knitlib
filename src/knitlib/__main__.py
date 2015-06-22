@@ -1,5 +1,7 @@
 import sys
 import click
+import knitlib
+import logging
 # Why does this file exist, and why __main__?
 # For more info, read:
 # - https://www.python.org/dev/peps/pep-0338/
@@ -8,10 +10,17 @@ import click
 
 
 @click.command()
-@click.argument('names', nargs=-1)
-def main(names):
-    click.echo(repr(names))
+@click.option('--plugin_name', default="DummyKnittingPlugin",  # prompt='Name of the Machine Plugin you want.',
+              help='The name of the Machine Plugin you want.')
+@click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]))
+def main(plugin_name, config):
+    config_dict = dict(config)
+    logging.info(config_dict)
+    plugin = knitlib.machine_handler.get_machine_plugin_by_id(plugin_name)
+    machine_instance = plugin()
+    machine_instance.configure(conf=config_dict)
+    machine_instance.knit()
+    machine_instance.finish()
 
 if __name__ == "__main__":
-    print("")
     sys.exit(main())
