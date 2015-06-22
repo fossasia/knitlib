@@ -1,5 +1,6 @@
 __author__ = 'tian'
 
-def parse:
+
+def parse():
     pass
 
