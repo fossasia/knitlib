@@ -26,9 +26,9 @@ author = 'Sebastian Oliva'
 copyright = '{0}, {1}'.format(year, author)
 version = release = '0.0.1'
 
-import sphinx_py3doc_enhanced_theme
-html_theme = "sphinx_py3doc_enhanced_theme"
-html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
+#import sphinx_py3doc_enhanced_theme
+#html_theme = "sphinx_py3doc_enhanced_theme"
+#html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
 
 pygments_style = 'trac'
 templates_path = ['.']
@@ -40,5 +40,5 @@ html_sidebars = {
 }
 html_short_title = '%s-%s' % (project, version)
 html_theme_options = {
-    'githuburl': 'https://github.com/tian2992/knitlib/'
+    'githuburl': 'https://github.com/fashiontec/knitlib/'
 }
