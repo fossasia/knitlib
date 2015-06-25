@@ -112,6 +112,7 @@ class BaseKnittingPlugin(Fysom):
                          {'name': 'configure', 'src': 'error', 'dst': 'configured'},
                          {'name': 'knit', 'src': 'configured', 'dst': 'knitting'},
                          {'name': 'finish', 'src': 'knitting', 'dst': 'finished'},
+                         {'name': 'finish', 'src': 'finished', 'dst': 'finished'},
                          {'name': 'fail', 'src': 'knitting', 'dst': 'error'}],
             'callbacks': callbacks_dict
         })

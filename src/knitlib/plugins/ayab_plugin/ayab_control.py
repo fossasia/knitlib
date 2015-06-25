@@ -24,7 +24,6 @@ import logging
 import os
 from PIL import Image
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
-import serial.tools.list_ports
 
 
 class AyabPluginControl(BaseKnittingPlugin):
@@ -174,12 +173,6 @@ class AyabPluginControl(BaseKnittingPlugin):
         logging.debug(conf)
         # TODO: Add more config options.
         return conf
-
-    def getSerialPorts(self):
-        """
-        Returns a list of all USB Serial Ports
-        """
-        return list(serial.tools.list_ports.grep("USB"))
 
     def __init__(self):
         super(AyabPluginControl, self).__init__()
@@ -414,6 +407,7 @@ class AyabPluginControl(BaseKnittingPlugin):
             return
 
         self._knitImage = True
+        logging.debug("Ready to start knitting process.")
         while self._knitImage:
             # TODO catch keyboard interrupts to abort knitting
             # TODO: port to state machine or similar.

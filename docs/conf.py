@@ -39,6 +39,8 @@ html_sidebars = {
    '**': ['searchbox.html', 'globaltoc.html', 'sourcelink.html'],
 }
 html_short_title = '%s-%s' % (project, version)
-html_theme_options = {
-    'githuburl': 'https://github.com/fashiontec/knitlib/'
-}
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+if on_rtd:
+    html_theme_options = {
+        'githuburl': 'https://github.com/fashiontec/knitlib/'
+    }

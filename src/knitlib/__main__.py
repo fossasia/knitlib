@@ -14,6 +14,7 @@ import logging
               help='The name of the Machine Plugin you want.')
 @click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]))
 def main(plugin_name, config):
+    logging.basicConfig(level=logging.DEBUG)
     config_dict = dict(config)
     logging.info(config_dict)
     plugin = knitlib.machine_handler.get_machine_plugin_by_id(plugin_name)
