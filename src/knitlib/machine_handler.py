@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import plugins
+import serial.tools.list_ports
 
 """Handles allocation of machines to plugins and resources.
 
@@ -7,6 +8,11 @@ Machine Plugins are defined as subclasses of BaseKnittingPlugin. Each Machine
 plugin can be matched to a port or interface. Each port can only handle one
 machine at once.
 """
+
+
+def get_available_ports():
+  """Returns a list of available ports."""
+  return list(serial.tools.list_ports.comports())
 
 
 def get_machines_by_type(machine_type):
