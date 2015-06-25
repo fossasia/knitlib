@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2009  Steve Conklin 
+# Copyright 2009  Steve Conklin
 # steve at conklinhouse dot com
 #
 # This program is free software; you can redistribute it and/or
@@ -65,7 +65,7 @@ import sys
 import os
 import os.path
 import string
-from array import *
+from array import array
 import serial
 
 version = '2.0'
@@ -78,13 +78,14 @@ version = '2.0'
 # the brother uses a LS size of 1024 bytes, so only one can fit.
 #
 
+
 class DiskSector():
     def __init__(self, fn):
         self.sectorSz = 1024
         self.idSz = 12
         self.data = ''
         self.id = ''
-        #self.id = array('c')
+        # self.id = array('c')
 
         dfn = fn + ".dat"
         idfn = fn + ".id"
@@ -192,12 +193,13 @@ class DiskSector():
             print '%02X ' % ord(i),
         print
 
+
 class Disk():
     """
     Fields:
         self.lastDatFilePath : string
     """
-    
+
     def __init__(self, basename):
         self.numSectors = 80
         self.Sectors = []
@@ -259,13 +261,13 @@ class Disk():
     def writeSector(self, psn, lsn, indata):
         self.Sectors[psn].write(indata)
         if psn % 2:
-            filenum =  ((psn-1)/2)+1
-            filename =  'file-%02d.dat' % filenum
+            filenum = ((psn - 1) / 2) + 1
+            filename = 'file-%02d.dat' % filenum
             # we wrote an odd sector, so create the
             # associated file
-            fn1 = os.path.join(self.filespath, '%02d.dat' % (psn-1))
+            fn1 = os.path.join(self.filespath, '%02d.dat' % (psn - 1))
             fn2 = os.path.join(self.filespath, '%02d.dat' % psn)
-            outfn =  os.path.join(self.filespath, filename)
+            outfn = os.path.join(self.filespath, filename)
             cmd = 'cat %s %s > %s' % (fn1, fn2, outfn)
             os.system(cmd)
             self.lastDatFilePath = outfn
@@ -274,10 +276,10 @@ class Disk():
     def readSector(self, psn, lsn):
         return self.Sectors[psn].read(1024)
 
-class PDDemulator():
 
+class PDDemulator():
     def __init__(self, basename):
-        self.listeners = [] # list of PDDEmulatorListener
+        self.listeners = []  # list of PDDEmulatorListener
         self.verbose = True
         self.noserial = False
         self.ser = None
@@ -285,7 +287,7 @@ class PDDemulator():
         self.FDCmode = False
         # bytes per logical sector
         self.bpls = 1024
-        self.formatLength = {'0':64, '1':80, '2': 128, '3': 256, '4': 512, '5': 1024, '6': 1280}
+        self.formatLength = {'0': 64, '1': 80, '2': 128, '3': 256, '4': 512, '5': 1024, '6': 1280}
         return
 
     def __del__(self):
@@ -293,17 +295,18 @@ class PDDemulator():
 
     def open(self, cport='/dev/ttyUSB0'):
         if self.noserial is False:
-            self.ser = serial.Serial(port=cport, baudrate=9600, parity='N', stopbits=1, timeout=1, xonxoff=0, rtscts=0, dsrdtr=0)
-#            self.ser.setRTS(True)
-            if self.ser == None:
+            self.ser = serial.Serial(port=cport, baudrate=9600, parity='N', stopbits=1, timeout=1, xonxoff=0, rtscts=0,
+                                     dsrdtr=0)
+            #            self.ser.setRTS(True)
+            if self.ser is None:
                 print 'Unable to open serial device %s' % cport
                 raise IOError
         return
 
     def close(self):
         if self.noserial is not False:
-            if ser:
-                ser.close()
+            if self.ser:
+                self.ser.close()
         return
 
     def dumpchars(self):
@@ -318,7 +321,7 @@ class PDDemulator():
         return
 
     def readsomechars(self, num):
-        sch =  self.ser.read(num)
+        sch = self.ser.read(num)
         return sch
 
     def readchar(self):
@@ -326,7 +329,7 @@ class PDDemulator():
         while len(inc) == 0:
             inc = self.ser.read()
         return inc
-            
+
     def writebytes(self, bytes):
         self.ser.write(bytes)
         return
@@ -345,7 +348,7 @@ class PDDemulator():
                 inbuf.append(inc)
 
         all = string.join(inbuf, '')
-        rv =  all.split(',')
+        rv = all.split(',')
         return rv
 
     def getPsnLsn(self, info):
@@ -376,7 +379,7 @@ class PDDemulator():
         sum = sum ^ 0xFF
 
         cksum = ord(self.readchar())
-        
+
         if cksum == sum:
             return buff
         else:
@@ -388,10 +391,12 @@ class PDDemulator():
         synced = False
         while True:
             self.handleRequest()
+            if synced:
+                break
         # never returns
         return
 
-    def handleRequest(self, blocking = True):
+    def handleRequest(self, blocking=True):
         if not blocking:
             if self.ser.inWaiting() == 0:
                 return
@@ -400,7 +405,7 @@ class PDDemulator():
             self.handleFDCmodeRequest(inc)
         else:
             # in OpMode, look for ZZ
-            #inc = self.readchar()
+            # inc = self.readchar()
             if inc != 'Z':
                 return
             inc = self.readchar()
@@ -413,7 +418,7 @@ class PDDemulator():
         if req == 0x08:
             # Change to FDD emulation mode (no data returned)
             inbuf = self.readOpmodeRequest(req)
-            if inbuf != None:
+            if inbuf is not None:
                 # Change Modes, leave any incoming serial data in buffer
                 self.FDCmode = True
         else:
@@ -472,8 +477,8 @@ class PDDemulator():
             # Sends result in third and fourth bytes of result code
             # See doc - return zero for disk installed and not swapped
 
-        elif cmd == 'F'or cmd == 'G':
-            #rint 'FDC Format',
+        elif cmd == 'F' or cmd == 'G':
+            # rint 'FDC Format',
             info = self.readFDDRequest()
 
             if len(info) != 1:
@@ -504,7 +509,7 @@ class PDDemulator():
             info = self.readFDDRequest()
             psn, lsn = self.getPsnLsn(info)
             print 'FDC Read ID Section %d' % psn
-            
+
             try:
                 id = self.disk.getSectorID(psn)
             except:
@@ -524,7 +529,7 @@ class PDDemulator():
             info = self.readFDDRequest()
             psn, lsn = self.getPsnLsn(info)
             print 'FDC Read one Logical Sector %d' % psn
-            
+
             try:
                 sd = self.disk.readSector(psn, lsn)
             except:
@@ -554,7 +559,7 @@ class PDDemulator():
             # Now we must send status (success)
             self.writebytes('00' + '%02X' % psn + '0000')
 
-            #self.writebytes('00000000')
+            # self.writebytes('00000000')
 
             # we receive 12 bytes here
             # compare with the specified sector (formatted is apparently zeros)
@@ -569,17 +574,17 @@ class PDDemulator():
                 raise
 
             print 'returning %s' % status
-                    # guessing - doc is unclear, but says that S always ends in 0000
-                    # MATCH 00000000
-                    # MATCH 02000000
-                    # infinite retries 10000000
-                    # infinite retries 20000000
-                    # blinking error 30000000
-                    # blinking error 40000000
-                    # infinite retries 50000000
-                    # infinite retries 60000000
-                    # infinite retries 70000000
-                    # infinite retries 80000000
+            # guessing - doc is unclear, but says that S always ends in 0000
+            # MATCH 00000000
+            # MATCH 02000000
+            # infinite retries 10000000
+            # infinite retries 20000000
+            # blinking error 30000000
+            # blinking error 40000000
+            # infinite retries 50000000
+            # infinite retries 60000000
+            # infinite retries 70000000
+            # infinite retries 80000000
 
             self.writebytes(status)
 
@@ -633,10 +638,11 @@ class PDDemulator():
         # return to Operational Mode
         return
 
+
 class PDDEmulatorListener:
     def dataReceived(self, fullFilePath):
         pass
-        
+
 # meat and potatos here
 
 if __name__ == "__main__":
@@ -648,6 +654,7 @@ if __name__ == "__main__":
     print 'Preparing . . . Please Wait'
     emu = PDDemulator(sys.argv[1])
 
+    # TODO: fix usb port hardcoding
     emu.open(cport=sys.argv[2])
 
     print 'Emulator Ready!'
