@@ -21,6 +21,7 @@ import time
 import serial
 import logging
 
+
 class Communication(object):
   """Class Handling the serial communication protocol."""
 
@@ -55,6 +56,7 @@ class Communication(object):
       self.__ser = None
     except:
       raise CommunicationException()
+
 
 class CommunicationException(Exception):
   pass
