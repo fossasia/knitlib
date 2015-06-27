@@ -35,6 +35,7 @@ def get_machine_plugin_by_id(machine_id):
   for k, v in plugins.active_plugins.items():
     if machine_id in v:
       return v[machine_id]
+  return None
 
 
 def get_machine_types():
