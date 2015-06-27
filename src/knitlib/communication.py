@@ -15,7 +15,6 @@
 #    along with AYAB.  If not, see <http://www.gnu.org/licenses/>.
 #
 #    Copyright 2015 Shiluka Dharmasena, Sebastian Oliva, Christian Obersteiner, Andreas Müller
-#    https://bitbucket.org/chris007de/ayab-apparat/
 
 import time
 import serial
