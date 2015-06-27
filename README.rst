@@ -13,7 +13,7 @@ knitlib
     :target: https://waffle.io/fashiontec/knitlib
     :alt: 'Stories in Ready'
 
-.. # |docs| image:: https://readthedocs.org/projects/knitlib/badge/?style=flat
+..  |docs| image:: https://readthedocs.org/projects/knitlib/badge/?style=flat
     :target: https://readthedocs.org/projects/knitlib
     :alt: Documentation Status
 
