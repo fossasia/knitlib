@@ -10,8 +10,8 @@ PluginType = Enum('PluginType', 'serial network other')
 '''PluginTypes holds an enumeration of the type of machine plugins available for use.'''
 
 active_plugins = {
-    PluginType.other: {dummy_plugin.DummyKnittingPlugin.__name__: dummy_plugin.DummyKnittingPlugin},
-    PluginType.serial: {ayab_plugin.AyabPluginControl.__name__: ayab_plugin.AyabPluginControl,
-                        pdd_plugin.PDDEmulationKnittingPlugin.__name__: pdd_plugin.PDDEmulationKnittingPlugin,
+    PluginType.other: {u"dummy": dummy_plugin.DummyKnittingPlugin},
+    PluginType.serial: {u"AYAB": ayab_plugin.AyabPluginControl,
+                        u"PDD": pdd_plugin.PDDEmulationKnittingPlugin,
                         }
 }
