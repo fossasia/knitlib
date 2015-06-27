@@ -326,6 +326,8 @@ class AyabPluginControl(BaseKnittingPlugin):
                 else:
                     sendBlankLine = True
 
+                lenImgExpanded = len(self.__image.imageExpanded())
+
                 # TODO Check assignment
                 if imgRow == imgHeight - 1 \
                         and (indexToSend == lenImgExpanded - 1):
