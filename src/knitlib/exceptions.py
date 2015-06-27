@@ -16,5 +16,6 @@
 #
 #    Copyright 2015 Sebastian Oliva, Shiluka Dharmasena <http://github.com/fashiontec/knitlib>
 
+
 class CommunicationException(Exception):
   pass
