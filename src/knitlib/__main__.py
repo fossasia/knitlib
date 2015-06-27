@@ -16,8 +16,13 @@ import logging
 def main(plugin_name, config):
     logging.basicConfig(level=logging.DEBUG)
     config_dict = dict(config)
-    logging.info(config_dict)
+    logging.debug(config_dict)
+    # Getting the selected plugin from ID.
     plugin = knitlib.machine_handler.get_machine_plugin_by_id(plugin_name)
+    if plugin is None:
+        logging.error("The plugin selected is not available. Available plugins are: {}".
+                      format(knitlib.machine_handler.get_active_machine_plugins_names()))
+        return -1
     machine_instance = plugin()
     machine_instance.configure(conf=config_dict)
     machine_instance.knit()

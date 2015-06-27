@@ -21,6 +21,15 @@ def get_machines_by_type(machine_type):
   return plugins.active_plugins.get(machine_type, {})
 
 
+def get_active_machine_plugins_names():
+  """Returns a list of tuples of the available plugins and type."""
+  active_plugins = []
+  for plugin_type, plugins_by_type in plugins.active_plugins.items():
+    for plugin_name, plugin_class in plugins_by_type.items():
+      active_plugins.append(plugin_name)
+  return active_plugins
+
+
 def get_machine_plugin_by_id(machine_id):
   """Returns a machine plugin given the machine_id class name."""
   for k, v in plugins.active_plugins.items():
