@@ -11,7 +11,8 @@ machine at once.
 
 
 def get_available_ports():
-  """Returns a list of available ports."""
+  """Returns a list tuples of available serial ports."""
+  # TODO: add other kinds of ports listing.
   return list(serial.tools.list_ports.comports())
 
 
