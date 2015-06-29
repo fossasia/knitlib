@@ -24,11 +24,13 @@ import knitting_plugin
 class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
   """Implements a sample knitting plugin that allows for simple operation emulation."""
 
+  __PLUGIN_NAME__ = u"dummy"
+
   def __init__(self):
     super(DummyKnittingPlugin, self).__init__()
     self.register_interactive_callbacks()
 
-  base_log_string = "{} has been called on dummy knitting plugin."
+  base_log_string = u"{} has been called on dummy knitting plugin."
 
   def onknit(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onknit"))

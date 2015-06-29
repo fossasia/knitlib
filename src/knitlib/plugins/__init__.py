@@ -18,17 +18,17 @@
 
 from enum import Enum
 
-import dummy_plugin
-import ayab_plugin
-import pdd_plugin
+from dummy_plugin import DummyKnittingPlugin
+from ayab_plugin import AyabPluginControl
+from pdd_plugin import PDDEmulationKnittingPlugin
 
 
 PluginType = Enum('PluginType', 'serial network other')
 '''PluginTypes holds an enumeration of the type of machine plugins available for use.'''
 
 active_plugins = {
-    PluginType.other: {u"dummy": dummy_plugin.DummyKnittingPlugin},
-    PluginType.serial: {u"AYAB": ayab_plugin.AyabPluginControl,
-                        u"PDD": pdd_plugin.PDDEmulationKnittingPlugin,
+    PluginType.other: {DummyKnittingPlugin.__PLUGIN_NAME__: DummyKnittingPlugin},
+    PluginType.serial: {AyabPluginControl.__PLUGIN_NAME__: ayab_plugin.AyabPluginControl,
+                        PDDEmulationKnittingPlugin.__PLUGIN_NAME__: pdd_plugin.PDDEmulationKnittingPlugin,
                         }
 }

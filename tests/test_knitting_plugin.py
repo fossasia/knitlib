@@ -50,7 +50,7 @@ def test_machine_handler_get_machines():
 
 
 def test_machine_handler_get_machine_by_id():
-    machine = knitlib.machine_handler.get_machine_plugin_by_id("dummy")
+    machine = knitlib.machine_handler.get_machine_plugin_by_id(dummy_plugin.DummyKnittingPlugin.__PLUGIN_NAME__)
     assert machine.__name__ == "DummyKnittingPlugin"
 
 def test_dummy_machine():

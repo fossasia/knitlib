@@ -27,6 +27,9 @@ from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
 
 
 class AyabPluginControl(BaseKnittingPlugin):
+
+    __PLUGIN_NAME__ = "AYAB"
+
     def onknit(self, e):
         logging.debug("called onknit on AyabPluginControl")
         self.__knitImage(self.__image, self.conf)
