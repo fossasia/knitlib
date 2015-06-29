@@ -28,7 +28,7 @@ PluginType = Enum('PluginType', 'serial network other')
 
 active_plugins = {
     PluginType.other: {DummyKnittingPlugin.__PLUGIN_NAME__: DummyKnittingPlugin},
-    PluginType.serial: {AyabPluginControl.__PLUGIN_NAME__: ayab_plugin.AyabPluginControl,
-                        PDDEmulationKnittingPlugin.__PLUGIN_NAME__: pdd_plugin.PDDEmulationKnittingPlugin,
+    PluginType.serial: {AyabPluginControl.__PLUGIN_NAME__: AyabPluginControl,
+                        PDDEmulationKnittingPlugin.__PLUGIN_NAME__: PDDEmulationKnittingPlugin,
                         }
 }
