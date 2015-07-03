@@ -100,7 +100,7 @@ setup(
         'pyserial',
         'enum34',
         'Pillow',
-        'validictory'
+        'jsonschema'
     ],
     extras_require={
         # eg: 'rst': ['docutils>=0.11'],

@@ -1,4 +1,4 @@
-import validictory
+import jsonschema
 import json
 
 
@@ -7,4 +7,4 @@ def validate():
   schema_file = file("knitting_pattern_schema.json", "rb")
   data = json.load(validate_file)
   schema = json.load(schema_file)
-  validictory.validate(data, schema)
+  jsonschema.validate(data, schema)
