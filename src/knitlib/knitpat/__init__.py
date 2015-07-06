@@ -20,5 +20,7 @@ def validate_dict(loaded_json_data):
         return False
 
 
-def parse():
-    pass
+def parse(string_data):
+    loaded_json_data = json.loads(string_data)
+    jsonschema.validate(loaded_json_data, __SCHEMA_DICT)
+    return loaded_json_data
