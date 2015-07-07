@@ -24,3 +24,7 @@ def parse_ustring(string_data):
     loaded_json_data = json.loads(string_data)
     jsonschema.validate(loaded_json_data, __SCHEMA_DICT)
     return loaded_json_data
+
+
+def parse_dict_from_cli(cli_dict):
+    pass
