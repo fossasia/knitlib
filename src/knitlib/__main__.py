@@ -20,6 +20,7 @@ import sys
 import click
 import knitlib
 import logging
+import knitpat
 # Why does this file exist, and why __main__?
 # For more info, read:
 # - https://www.python.org/dev/peps/pep-0338/
@@ -35,6 +36,7 @@ def main(plugin_name, config):
     logging.basicConfig(level=logging.DEBUG)
     config_dict = dict(config)
     logging.debug(config_dict)
+    knitpat_dict = knitpat.parse_dict_from_cli(config_dict)
     # Getting the selected plugin from ID.
     plugin = knitlib.machine_handler.get_machine_plugin_by_id(plugin_name)
     if plugin is None:
@@ -42,7 +44,7 @@ def main(plugin_name, config):
                       format(knitlib.machine_handler.get_active_machine_plugins_names()))
         return -1
     machine_instance = plugin()
-    machine_instance.configure(conf=config_dict)
+    machine_instance.configure(conf=knitpat_dict)
     machine_instance.knit()
     machine_instance.finish()
 
