@@ -57,7 +57,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         logging.debug("Working with final conf: {}".format(e.conf))
 
         script_dir = os.path.dirname(os.path.abspath(__file__))  # Temp fix for testing Image opening
-        pil_image = Image.open(os.path.join(script_dir, conf["filename"]))
+        pil_image = Image.open(os.path.join(script_dir, conf["file_url"]))
 
         try:
             self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
@@ -172,7 +172,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
         # getting file location from textbox
         filename_text = u"mushroom.png"
-        conf["filename"] = filename_text
+        conf["file_url"] = filename_text
         logging.debug(conf)
         # TODO: Add more config options.
         return conf
