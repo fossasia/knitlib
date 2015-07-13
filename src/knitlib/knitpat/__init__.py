@@ -27,4 +27,5 @@ def parse_ustring(string_data):
 
 
 def parse_dict_from_cli(cli_dict):
+    return cli_dict
     pass

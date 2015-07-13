@@ -8,7 +8,7 @@
       "description":"The name of the file that holds the pattern.",
       "type":"string"
     },
-    "name":{
+    "pattern_name":{
       "description":"Name of the pattern",
       "type":"string"
     },
@@ -49,7 +49,6 @@
   },
   "required":[
     "file_url",
-    "name",
     "colors"
   ]
 }

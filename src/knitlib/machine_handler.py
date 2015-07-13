@@ -30,12 +30,12 @@ def get_active_machine_plugins_names():
   return active_plugins
 
 
-def get_machine_plugin_by_id(machine_id):
+def get_machine_plugin_by_id(machine_id, if_not_found=None):
   """Returns a machine plugin given the machine_id class name."""
   for k, v in plugins.active_plugins.items():
     if machine_id in v:
       return v[machine_id]
-  return None
+  return if_not_found
 
 
 def get_machine_types():

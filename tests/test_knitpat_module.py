@@ -1,6 +1,7 @@
 __author__ = 'tian'
 
 import json
+import logging
 from click.testing import CliRunner
 
 from knitlib import __main__ as main
@@ -43,10 +44,10 @@ def test_cli_parse_simple_pattern():
     runner = CliRunner()
 
     result = runner.invoke(main, ["--plugin_name", "dummy",
-                                  "--config",
-                                  "file_url", "mypat.png",
-                                  "name", "a small sweater",
-                                  "colors" "2"
+                                  "--config", "file_url", "mypat.png",
+                                  "--config", "pattern_name", "a small sweater",
+                                  "--config", "colors", "2"
                                   ])
-    # assert result.exit_code is 0  # Should be 0 as it would mean successful execution.
+    assert result.exit_code is 0  # Should be 0 as it would mean successful execution.
     # TODO: assert that parse_dict_from_cli is properly working
+

@@ -24,6 +24,7 @@ import logging
 import os
 from PIL import Image
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
+from knitlib import knitpat
 
 
 class AyabPluginControl(BaseKnittingPlugin):
@@ -45,11 +46,12 @@ class AyabPluginControl(BaseKnittingPlugin):
 
         # conf = e.event.conf
         # self.conf = e.event.conf
-        if hasattr(e, "conf"):
-            if len(e.conf) == 0:
-                conf = self.generate_test_configuration()
-            else:
+        if hasattr(e, "conf") and e.conf is not None:
+            if knitpat.validate_dict(e.conf):
                 conf = e.conf
+            else:
+                conf = self.generate_test_configuration()
+
         else:
             conf = self.generate_test_configuration()
 

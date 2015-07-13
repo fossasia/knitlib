@@ -27,6 +27,8 @@ import knitpat
 # - https://docs.python.org/2/using/cmdline.html#cmdoption-m
 # - https://docs.python.org/3/using/cmdline.html#cmdoption-m
 
+name = "knitlib"
+
 
 @click.command()
 @click.option('--plugin_name', default="dummy",  # pPluginTyperompt='Name of the Machine Plugin you want.',
@@ -34,19 +36,23 @@ import knitpat
 @click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]))
 def main(plugin_name, config):
     logging.basicConfig(level=logging.DEBUG)
+    logging.debug("Config got as object {0}".format(config))
     config_dict = dict(config)
     logging.debug(config_dict)
     knitpat_dict = knitpat.parse_dict_from_cli(config_dict)
+    logging.debug("Knitpat object parsed as object {0}".format(knitpat_dict))
     # Getting the selected plugin from ID.
     plugin = knitlib.machine_handler.get_machine_plugin_by_id(plugin_name)
+    logging.debug("Plugin Selected: {0}".format(plugin))
     if plugin is None:
-        logging.error("The plugin selected is not available. Available plugins are: {}".
-                      format(knitlib.machine_handler.get_active_machine_plugins_names()))
+        print("The plugin selected is not available. Available plugins are: {}".
+              format(knitlib.machine_handler.get_active_machine_plugins_names()))
         return -1
     machine_instance = plugin()
     machine_instance.configure(conf=knitpat_dict)
     machine_instance.knit()
     machine_instance.finish()
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())
