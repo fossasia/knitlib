@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from click.testing import CliRunner
 import mock
-from knitlib import __main__ as main
+from knitlib.__main__ import main
 
 
 def test_main_init_with_no_args():
