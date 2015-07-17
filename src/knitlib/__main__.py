@@ -47,7 +47,7 @@ def main(plugin_name, config):
     if plugin is None:
         print("The plugin selected is not available. Available plugins are: {}".
               format(knitlib.machine_handler.get_active_machine_plugins_names()))
-        return -1
+        return -2
     machine_instance = plugin()
     machine_instance.configure(conf=knitpat_dict)
     machine_instance.knit()

@@ -48,6 +48,7 @@ def test_cli_parse_simple_pattern():
                                   "--config", "pattern_name", "a small sweater",
                                   "--config", "colors", "2"
                                   ])
+    print result.exception
     assert result.exit_code is 0  # Should be 0 as it would mean successful execution.
     # TODO: assert that parse_dict_from_cli is properly working
 
