@@ -1,13 +1,14 @@
 __author__ = 'tian'
 
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
-
+import uuid
 
 class KnittingJob(object):
     """A Knitting job is composed of a Machine Plugin at a certain state, a port and a knitpat file."""
 
     def __init__(self, plugin_class, port, knitpat_file):
         assert issubclass(plugin_class, BaseKnittingPlugin)
+        self.id = uuid.uuid4()
         self.__plugin_class = plugin_class
         self.__plugin = None
         self.__port = port
