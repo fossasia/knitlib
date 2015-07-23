@@ -31,7 +31,6 @@ import logging
 
 from knitlib.exceptions import CommunicationException
 
-
 class AyabCommunication(object):
   """Class Handling the serial communication protocol."""
 
