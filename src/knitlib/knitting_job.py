@@ -3,6 +3,7 @@ __author__ = 'tian'
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
 import uuid
 
+
 class KnittingJob(object):
     """A Knitting job is composed of a Machine Plugin at a certain state, a port and a knitpat file."""
 
