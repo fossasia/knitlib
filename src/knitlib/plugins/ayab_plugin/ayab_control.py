@@ -114,25 +114,28 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def __wait_for_user_action(self, message="", message_type="info"):
         """Waits for the user to react, blocking it."""
+        self.interactive_callbacks["blocking_user_action"](message, message_type)
         # TODO: should be replaced by self.interactive_callbacks["user_action"]
-        logging.info(message)
-        time.sleep(3)
-        raw_input()
-        pass
+        # logging.info(message)
+        # time.sleep(3)
+        # raw_input()
+        # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('display_blocking_pop_up_signal(QString, QString)'), message, message_type)
 
     def __notify_user(self, message="", message_type="info"):
-        """Sends the display_pop_up_signal QtSignal to main GUI thread, not blocking it."""
+        """Sends the a notification without blocking."""
+        self.interactive_callbacks["message"](message, message_type)
         # TODO: should be replaced by self.interactive_callbacks["info"]
-        logging.info(message)
-        pass
+        # logging.info(message)
+        # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
 
     def __emit_progress(self, percent, done, total):
         """Shows the current job progress."""
+        self.interactive_callbacks["progress"](percent, done, total)
         # TODO: should be replaced by self.interactive_callbacks["progress"]
-        logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
-        pass
+        # logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
+        # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
 
     def setup_behaviour_ui(self):
