@@ -81,16 +81,19 @@ class BaseKnittingPlugin(Fysom):
             callbacks = {}
         self.interactive_callbacks = callbacks
 
+    @staticmethod
     def __cli_emit_message(message, level="info"):
         # TODO: use appropriate logging level for message.
         logging.info(message)
 
+    @staticmethod
     def __cli_blocking_action(message, level="info"):
         """Capturing raw_input to block CLI action."""
         # TODO: use appropriate logging level for message.
         logging.info(message)
         raw_input()
 
+    @staticmethod
     def __cli_log_progress(percent, done, total):
         """Logs progress percentage and lines of current job."""
         logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
