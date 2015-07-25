@@ -28,16 +28,16 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
 
   def __init__(self):
     super(DummyKnittingPlugin, self).__init__()
-    self.register_interactive_callbacks()
 
   base_log_string = u"{} has been called on dummy knitting plugin."
 
   def onknit(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onknit"))
     # In order to simulate blocking we make it sleep.
-    for i in range(5):
+    total = 5
+    for i in range(total):
       time.sleep(1)
-      print("Knitted line: {}".format(i))
+      self.interactive_callbacks["progress"](i / float(total), i, total)
 
   def onfinish(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onfinish"))
