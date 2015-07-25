@@ -17,6 +17,7 @@
 #    Copyright 2015 Sebastian Oliva <http://github.com/fashiontec/knitlib>
 
 
+import abc
 import logging
 from fysom import Fysom
 
@@ -27,6 +28,7 @@ class BaseKnittingPlugin(Fysom):
     Subclasses inherit the basic State Machine defined in __init__.
     """
 
+    @abc.abstractmethod
     def onknit(self, e):
         """Callback when state machine executes knit().
 
@@ -36,6 +38,7 @@ class BaseKnittingPlugin(Fysom):
         raise NotImplementedError(
             self.__NOT_IMPLEMENTED_ERROR.format("onknit. It is used for the main 'knitting loop'."))
 
+    @abc.abstractmethod
     def onfinish(self, e):
         """Callback when state machine executes finish().
 
@@ -45,6 +48,7 @@ class BaseKnittingPlugin(Fysom):
         raise NotImplementedError(
             self.__NOT_IMPLEMENTED_ERROR.format("onfinish. It is a callback that is called when knitting is over."))
 
+    @abc.abstractmethod
     def onconfigure(self, e):
         """Callback when state machine executes configure(options={})
 
@@ -58,10 +62,12 @@ class BaseKnittingPlugin(Fysom):
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "onconfigure. It is used to configure the knitting plugin before starting."))
 
+    @abc.abstractmethod
     def publish_options(self):
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "publish_options must be defined. It is used to expose the possible knitting options."))
 
+    @abc.abstractmethod
     def validate_configuration(self, conf):
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "validate_configuration must be defined. It verifies configurations are valid."))
