@@ -81,36 +81,37 @@ class BaseKnittingPlugin(Fysom):
             callbacks = {}
         self.interactive_callbacks = callbacks
 
-    def __interactive_info(message):
+    def __cli_emit_message(message, level="info"):
+        # TODO: use appropriate logging level for message.
+        logging.info(message)
+
+    def __cli_blocking_action(message, level="info"):
+        """Capturing raw_input to block CLI action."""
+        # TODO: use appropriate logging level for message.
         logging.info(message)
         raw_input()
 
-    def __interactive_warn(message):
-        logging.info(message)
-        raw_input()
-
-    def __interactive_error(message):
-        logging.error(message)
-        raw_input()
-
-    def __log_progress(message):
-        logging.info(message)
+    def __cli_log_progress(percent, done, total):
+        """Logs progress percentage and lines of current job."""
+        logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
 
     def __init__(self, callbacks_dict=None, interactive_callbacks=None):
-        self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implment {0}"
+        self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implement {0}"
+        """Interactive callbacks handle Plugin-Frontend interaction hooks."""
         self.interactive_callbacks = {}
 
+        # Are we running on CLI or knitlib web?
+        # If no callbacks are registered, we set a CLI set as default.
         if interactive_callbacks is None:
             self.register_interactive_callbacks({
-                "info": BaseKnittingPlugin.__interactive_info,
-                "user_action": BaseKnittingPlugin.__interactive_info,
-                "warning": BaseKnittingPlugin.__interactive_warn,
-                "error": BaseKnittingPlugin.__interactive_error,
-                "progress": BaseKnittingPlugin.__log_progress
+                "blocking_user_action": BaseKnittingPlugin.__cli_blocking_action,
+                "message": BaseKnittingPlugin.__cli_emit_message,
+                "progress": BaseKnittingPlugin.__cli_log_progress
             })
         else:
             self.register_interactive_callbacks(interactive_callbacks)
 
+        # Fysom allows to set hooks before changing states, we set them here.
         if callbacks_dict is None:
             callbacks_dict = {
                 'onknit': self.onknit,
