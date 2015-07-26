@@ -17,3 +17,8 @@ To use knitlib in a project::
 
 Each machine has it's own configuration options, however the base functions are standardized in knitpat.
 Check the Knitpat section for more info.
+
+Knitlib API allows for setting callbacks for certain actions that the user needs to interact with the underlying
+hardware. This callbacks system includes messaging, messages with blocking operations (move knob, set dial, feed yarn,
+etc) and progress. Default callbacks are included for CLI operation, and projects should provide their own
+implementations for the environment in use (knitweb, desktop UIs, etc).
