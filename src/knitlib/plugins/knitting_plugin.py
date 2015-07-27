@@ -66,6 +66,10 @@ class BaseKnittingPlugin(Fysom):
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "validate_configuration must be defined. It verifies configurations are valid."))
 
+    @abc.abstractmethod
+    def set_port(self, port_name):
+        """Sets a port name before configuration method."""
+
     def register_interactive_callbacks(self, callbacks=None):
         """Serves to register a dict of callbacks that require interaction by the User,
 

@@ -31,12 +31,14 @@ name = "knitlib"
 
 
 @click.command()
-@click.option('--plugin_name', default="dummy",  # pPluginTyperompt='Name of the Machine Plugin you want.',
+@click.option('--plugin_name', default="dummy",  # pPluginType prompt='Name of the Machine Plugin you want.',
               help='The name of the Machine Plugin you want.')
 @click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]))
-def main(plugin_name, config):
+@click.option('--port', type=unicode) 
+def main(plugin_name, config, port):
     logging.basicConfig(level=logging.DEBUG)
     logging.debug("Config got as object {0}".format(config))
+    logging.debug("Port set as {}".format(port))
     config_dict = dict(config)
     logging.debug(config_dict)
     knitpat_dict = knitpat.parse_dict_from_cli(config_dict)
