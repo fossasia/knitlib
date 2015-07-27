@@ -31,6 +31,20 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     __PLUGIN_NAME__ = "AYAB"
 
+    def __init__(self):
+        super(AyabPluginControl, self).__init__()
+        # KnittingPlugin.__init__(self)
+
+        # From AYAB's ayab_control
+        self.__API_VERSION = 0x03
+        self.__ayabCom = AyabCommunication()
+
+        self.__formerRequest = 0
+        self.__lineBlock = 0
+
+    def __del__(self):
+        self.__close_serial()
+
     def onknit(self, e):
         logging.debug("called onknit on AyabPluginControl")
         self.__knitImage(self.__image, self.conf)
@@ -177,21 +191,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         return conf
 
     def set_port(self, port_name=u"/dev/ttyACM0"):
-        self.conf["portname"]=port_name
-
-    def __init__(self):
-        super(AyabPluginControl, self).__init__()
-        # KnittingPlugin.__init__(self)
-
-        # From AYAB's ayab_control
-        self.__API_VERSION = 0x03
-        self.__ayabCom = AyabCommunication()
-
-        self.__formerRequest = 0
-        self.__lineBlock = 0
-
-    def __del__(self):
-        self.__close_serial()
+        self.conf["portname"] = port_name
 
     # From ayab_control
     #####################################
