@@ -17,6 +17,7 @@
 #    Copyright 2015 Sebastian Oliva <http://github.com/fashiontec/knitlib>
 
 
+import abc
 import logging
 from fysom import Fysom
 

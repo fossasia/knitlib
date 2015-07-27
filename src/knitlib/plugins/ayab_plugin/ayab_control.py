@@ -166,8 +166,8 @@ class AyabPluginControl(BaseKnittingPlugin):
         conf["inf_repeat"] = 0
         conf["machine_type"] = "single"
 
-        #serial_port = u"/dev/ttyACM0"
-        #conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
+        # serial_port = u"/dev/ttyACM0"
+        # conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
         self.set_port()
         # getting file location from textbox
         filename_text = u"mushroom.png"
