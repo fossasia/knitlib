@@ -7,7 +7,7 @@ import uuid
 class KnittingJob(object):
     """A Knitting job is composed of a Machine Plugin at a certain state, a port and a knitpat file."""
 
-    def __init__(self, plugin_class, port, knitpat_dict):
+    def __init__(self, plugin_class, port, knitpat_dict=None):
         assert issubclass(plugin_class, BaseKnittingPlugin)
         self.id = uuid.uuid4()
         self.__plugin_class = plugin_class
@@ -29,8 +29,10 @@ class KnittingJob(object):
         assert self.__plugin.current == "activated"
         self.__plugin.set_port(self.__port)
 
-    def configure_job(self):
-        self.__plugin.configure(self.__knitpat_dict)
+    def configure_job(self, knitpat_dict=None):
+        if knitpat_dict is None:
+            knitpat_dict = self.__knitpat_dict
+        self.__plugin.configure(knitpat_dict)
 
     def knit_job(self):
         # TODO: ensure plugin.knit is called asynchronously.
