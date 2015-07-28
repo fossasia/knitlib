@@ -24,7 +24,7 @@ class KnittingJob(object):
     def get_status(self):
         return self.__plugin.current
 
-    def start_job(self):
+    def init_job(self):
         self.__plugin = self.__plugin_class()
         assert self.__plugin.current == "activated"
         self.__plugin.set_port(self.__port)
