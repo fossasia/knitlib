@@ -31,6 +31,20 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     __PLUGIN_NAME__ = "AYAB"
 
+    def __init__(self):
+        super(AyabPluginControl, self).__init__()
+        # KnittingPlugin.__init__(self)
+
+        # From AYAB's ayab_control
+        self.__API_VERSION = 0x03
+        self.__ayabCom = AyabCommunication()
+
+        self.__formerRequest = 0
+        self.__lineBlock = 0
+
+    def __del__(self):
+        self.__close_serial()
+
     def onknit(self, e):
         logging.debug("called onknit on AyabPluginControl")
         self.__knitImage(self.__image, self.conf)
@@ -138,10 +152,6 @@ class AyabPluginControl(BaseKnittingPlugin):
         # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
 
-    def setup_behaviour_ui(self):
-        """Connects methods to UI elements."""
-        pass
-
     def generate_test_configuration(self):
         """Creates a configuration dict from the ui elements.
 
@@ -173,8 +183,9 @@ class AyabPluginControl(BaseKnittingPlugin):
         conf["inf_repeat"] = 0
         conf["machine_type"] = "single"
 
-        serial_port = u"/dev/ttyACM0"
-        conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
+        # serial_port = u"/dev/ttyACM0"
+        # conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
+        self.set_port()
         # getting file location from textbox
         filename_text = u"mushroom.png"
         conf["file_url"] = filename_text
@@ -182,19 +193,8 @@ class AyabPluginControl(BaseKnittingPlugin):
         # TODO: Add more config options.
         return conf
 
-    def __init__(self):
-        super(AyabPluginControl, self).__init__()
-        # KnittingPlugin.__init__(self)
-
-        # From AYAB's ayab_control
-        self.__API_VERSION = 0x03
-        self.__ayabCom = AyabCommunication()
-
-        self.__formerRequest = 0
-        self.__lineBlock = 0
-
-    def __del__(self):
-        self.__close_serial()
+    def set_port(self, port_name=u"/dev/ttyACM0"):
+        self.conf["portname"] = port_name
 
     # From ayab_control
     #####################################

@@ -47,3 +47,6 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
 
   def publish_options(self):
     logging.debug(DummyKnittingPlugin.base_log_string.format("pub options"))
+
+  def set_port(self, *args, **kwargs):
+    pass
