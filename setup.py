@@ -99,7 +99,8 @@ setup(
         'fysom',
         'pyserial',
         'enum34',
-        'Pillow'
+        'Pillow',
+        'jsonschema'
     ],
     extras_require={
         # eg: 'rst': ['docutils>=0.11'],

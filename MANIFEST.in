@@ -19,4 +19,6 @@ include README.rst
 include tox.ini .travis.yml appveyor.yml
 include requirements.txt
 
+include *.json
+
 global-exclude *.py[cod] __pycache__ *.so

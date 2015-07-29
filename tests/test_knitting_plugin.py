@@ -1,4 +1,20 @@
 # -*- coding: utf-8 -*-
+# This file is part of Knitlib.
+#
+#    Knitlib is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Knitlib is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Knitlib.  If not, see <http://www.gnu.org/licenses/>.
+#
+#    Copyright 2015 Sebastian Oliva <http://github.com/fashiontec/knitlib>
 import pytest
 
 import knitlib
@@ -34,7 +50,7 @@ def test_machine_handler_get_machines():
 
 
 def test_machine_handler_get_machine_by_id():
-    machine = knitlib.machine_handler.get_machine_plugin_by_id("DummyKnittingPlugin")
+    machine = knitlib.machine_handler.get_machine_plugin_by_id(dummy_plugin.DummyKnittingPlugin.__PLUGIN_NAME__)
     assert machine.__name__ == "DummyKnittingPlugin"
 
 def test_dummy_machine():
@@ -42,7 +58,7 @@ def test_dummy_machine():
     mach_type = knitlib.machine_handler.get_machine_types().other
     other_type_dict = knitlib.machine_handler.get_machines_by_type(mach_type)
     assert type(other_type_dict) is dict
-    dummy_type = other_type_dict["DummyKnittingPlugin"]()
+    dummy_type = other_type_dict["dummy"]()
 
     dummy_type.configure(None)
     dummy_type.knit()
@@ -50,7 +66,8 @@ def test_dummy_machine():
 
 
 def test_ayab_plugin():
-    machine = knitlib.machine_handler.get_machine_plugin_by_id("AyabPluginControl")()
+    pass
+    # machine = knitlib.machine_handler.get_machine_plugin_by_id("AYAB")()
 
     #dummy_type.configure(None)
     #dummy_type.knit() # https://bitbucket.org/chris007de/ayab-apparat/wiki/english/Hardware#!nomachine-development-mode

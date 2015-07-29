@@ -24,9 +24,13 @@ import logging
 import os
 from PIL import Image
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
+from knitlib import knitpat
 
 
 class AyabPluginControl(BaseKnittingPlugin):
+
+    __PLUGIN_NAME__ = "AYAB"
+
     def onknit(self, e):
         logging.debug("called onknit on AyabPluginControl")
         self.__knitImage(self.__image, self.conf)
@@ -42,11 +46,12 @@ class AyabPluginControl(BaseKnittingPlugin):
 
         # conf = e.event.conf
         # self.conf = e.event.conf
-        if hasattr(e, "conf"):
-            if len(e.conf) == 0:
-                conf = self.generate_test_configuration()
-            else:
+        if hasattr(e, "conf") and e.conf is not None:
+            if knitpat.validate_dict(e.conf):
                 conf = e.conf
+            else:
+                conf = self.generate_test_configuration()
+
         else:
             conf = self.generate_test_configuration()
 
@@ -54,7 +59,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         logging.debug("Working with final conf: {}".format(e.conf))
 
         script_dir = os.path.dirname(os.path.abspath(__file__))  # Temp fix for testing Image opening
-        pil_image = Image.open(os.path.join(script_dir, conf["filename"]))
+        pil_image = Image.open(os.path.join(script_dir, conf["file_url"]))
 
         try:
             self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
@@ -169,7 +174,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
         # getting file location from textbox
         filename_text = u"mushroom.png"
-        conf["filename"] = filename_text
+        conf["file_url"] = filename_text
         logging.debug(conf)
         # TODO: Add more config options.
         return conf
@@ -325,6 +330,8 @@ class AyabPluginControl(BaseKnittingPlugin):
                     logging.debug("COLOR" + str(color))
                 else:
                     sendBlankLine = True
+
+                lenImgExpanded = len(self.__image.imageExpanded())
 
                 # TODO Check assignment
                 if imgRow == imgHeight - 1 \
