@@ -1,8 +1,23 @@
 # -*- coding: utf-8 -*-
-#    This file is part of Knitlib, based on AYAB.
-#    Copyright 2014, 2015 Sebastian Oliva
-#    https://github.com/fashiontec/knitlib/
+# This file is part of Knitlib.
+#
+#    Knitlib is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Knitlib is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Knitlib.  If not, see <http://www.gnu.org/licenses/>.
+#
+#    Copyright 2015 Sebastian Oliva <http://github.com/fashiontec/knitlib>
 
+
+import abc
 import logging
 from fysom import Fysom
 
@@ -13,6 +28,7 @@ class BaseKnittingPlugin(Fysom):
     Subclasses inherit the basic State Machine defined in __init__.
     """
 
+    @abc.abstractmethod
     def onknit(self, e):
         """Callback when state machine executes knit().
 
@@ -22,6 +38,7 @@ class BaseKnittingPlugin(Fysom):
         raise NotImplementedError(
             self.__NOT_IMPLEMENTED_ERROR.format("onknit. It is used for the main 'knitting loop'."))
 
+    @abc.abstractmethod
     def onfinish(self, e):
         """Callback when state machine executes finish().
 
@@ -31,6 +48,7 @@ class BaseKnittingPlugin(Fysom):
         raise NotImplementedError(
             self.__NOT_IMPLEMENTED_ERROR.format("onfinish. It is a callback that is called when knitting is over."))
 
+    @abc.abstractmethod
     def onconfigure(self, e):
         """Callback when state machine executes configure(options={})
 
@@ -44,13 +62,19 @@ class BaseKnittingPlugin(Fysom):
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "onconfigure. It is used to configure the knitting plugin before starting."))
 
+    @abc.abstractmethod
     def publish_options(self):
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "publish_options must be defined. It is used to expose the possible knitting options."))
 
+    @abc.abstractmethod
     def validate_configuration(self, conf):
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "validate_configuration must be defined. It verifies configurations are valid."))
+
+    @abc.abstractmethod
+    def set_port(self, port_name):
+        """Sets a port name before configuration method."""
 
     def register_interactive_callbacks(self, callbacks=None):
         """Serves to register a dict of callbacks that require interaction by the User,
@@ -67,36 +91,40 @@ class BaseKnittingPlugin(Fysom):
             callbacks = {}
         self.interactive_callbacks = callbacks
 
-    def __interactive_info(message):
+    @staticmethod
+    def __cli_emit_message(message, level="info"):
+        # TODO: use appropriate logging level for message.
+        logging.info(message)
+
+    @staticmethod
+    def __cli_blocking_action(message, level="info"):
+        """Capturing raw_input to block CLI action."""
+        # TODO: use appropriate logging level for message.
         logging.info(message)
         raw_input()
 
-    def __interactive_warn(message):
-        logging.info(message)
-        raw_input()
-
-    def __interactive_error(message):
-        logging.error(message)
-        raw_input()
-
-    def __log_progress(message):
-        logging.info(message)
+    @staticmethod
+    def __cli_log_progress(percent, done, total):
+        """Logs progress percentage and lines of current job."""
+        logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
 
     def __init__(self, callbacks_dict=None, interactive_callbacks=None):
-        self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implment {0}"
+        self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implement {0}"
+        """Interactive callbacks handle Plugin-Frontend interaction hooks."""
         self.interactive_callbacks = {}
 
+        # Are we running on CLI or knitlib web?
+        # If no callbacks are registered, we set a CLI set as default.
         if interactive_callbacks is None:
             self.register_interactive_callbacks({
-                "info": BaseKnittingPlugin.__interactive_info,
-                "user_action": BaseKnittingPlugin.__interactive_info,
-                "warning": BaseKnittingPlugin.__interactive_warn,
-                "error": BaseKnittingPlugin.__interactive_error,
-                "progress": BaseKnittingPlugin.__log_progress
+                "blocking_user_action": BaseKnittingPlugin.__cli_blocking_action,
+                "message": BaseKnittingPlugin.__cli_emit_message,
+                "progress": BaseKnittingPlugin.__cli_log_progress
             })
         else:
             self.register_interactive_callbacks(interactive_callbacks)
 
+        # Fysom allows to set hooks before changing states, we set them here.
         if callbacks_dict is None:
             callbacks_dict = {
                 'onknit': self.onknit,

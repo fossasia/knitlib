@@ -29,6 +29,8 @@ import serial
 
 import logging
 
+from knitlib.exceptions import CommunicationException
+
 
 class AyabCommunication(object):
   """Class Handling the serial communication protocol."""
@@ -76,6 +78,20 @@ class AyabCommunication(object):
           line += self.__ser.read(1)
     return line
 
+  def write_line(self, line):
+    """Writes a line """
+    if self.__ser:
+      while line.length > 0:
+          self.__ser.write(line)
+    return line
+
+  def write_byte(self, byte):
+    """Writes a byte"""
+    if self.__ser:
+      while byte.length > 0:
+          self.__ser.write(byte)
+    return byte
+
   def req_start(self, startNeedle, stopNeedle):
       """Sends a start message to the controller."""
 
@@ -113,7 +129,3 @@ class AyabCommunication(object):
       # print "< cnfLine"
       # print lineData
       self.__ser.write(msg + '\n\r')
-
-
-class CommunicationException(Exception):
-  pass

@@ -1,0 +1,54 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "title":"KnittingPattern",
+  "description":"A knitting pattern specification. Defines a file name and knitting specs.",
+  "type":"object",
+  "properties":{
+    "file_url":{
+      "description":"The name of the file that holds the pattern.",
+      "type":"string"
+    },
+    "pattern_name":{
+      "description":"Name of the pattern",
+      "type":"string"
+    },
+    "dimensions":{
+      "type":"object",
+      "properties":{
+        "image_length":{
+          "type":"integer"
+        },
+        "image_width":{
+          "type":"integer"
+        },
+        "physical_length":{
+          "type":"number"
+        },
+        "physical_width":{
+          "type":"number"
+        },
+        "units":{
+          "type":"string"
+        },
+        "yarn_strength":{
+          "type":"object",
+          "properties":{
+            "units":{
+              "type":"string"
+            },
+            "value":{
+              "type":"number"
+            }
+          }
+        }
+      }
+    },
+    "colors":{
+      "type":"integer"
+    }
+  },
+  "required":[
+    "file_url",
+    "colors"
+  ]
+}

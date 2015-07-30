@@ -11,7 +11,8 @@ machine at once.
 
 
 def get_available_ports():
-  """Returns a list of available ports."""
+  """Returns a list tuples of available serial ports."""
+  # TODO: add other kinds of ports listing.
   return list(serial.tools.list_ports.comports())
 
 
@@ -20,11 +21,21 @@ def get_machines_by_type(machine_type):
   return plugins.active_plugins.get(machine_type, {})
 
 
-def get_machine_plugin_by_id(machine_id):
+def get_active_machine_plugins_names():
+  """Returns a list of tuples of the available plugins and type."""
+  active_plugins = []
+  for plugin_type, plugins_by_type in plugins.active_plugins.items():
+    for plugin_name, plugin_class in plugins_by_type.items():
+      active_plugins.append(plugin_name)
+  return active_plugins
+
+
+def get_machine_plugin_by_id(machine_id, if_not_found=None):
   """Returns a machine plugin given the machine_id class name."""
   for k, v in plugins.active_plugins.items():
     if machine_id in v:
       return v[machine_id]
+  return if_not_found
 
 
 def get_machine_types():

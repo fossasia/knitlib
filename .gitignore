@@ -58,3 +58,4 @@ docs/_build
 .ve
 .bootstrap
 *.bak
+.pythoscope/

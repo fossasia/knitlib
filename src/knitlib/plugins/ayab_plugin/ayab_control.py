@@ -24,9 +24,27 @@ import logging
 import os
 from PIL import Image
 from knitlib.plugins.knitting_plugin import BaseKnittingPlugin
+from knitlib import knitpat
 
 
 class AyabPluginControl(BaseKnittingPlugin):
+
+    __PLUGIN_NAME__ = "AYAB"
+
+    def __init__(self):
+        super(AyabPluginControl, self).__init__()
+        # KnittingPlugin.__init__(self)
+
+        # From AYAB's ayab_control
+        self.__API_VERSION = 0x03
+        self.__ayabCom = AyabCommunication()
+
+        self.__formerRequest = 0
+        self.__lineBlock = 0
+
+    def __del__(self):
+        self.__close_serial()
+
     def onknit(self, e):
         logging.debug("called onknit on AyabPluginControl")
         self.__knitImage(self.__image, self.conf)
@@ -42,11 +60,12 @@ class AyabPluginControl(BaseKnittingPlugin):
 
         # conf = e.event.conf
         # self.conf = e.event.conf
-        if hasattr(e, "conf"):
-            if len(e.conf) == 0:
-                conf = self.generate_test_configuration()
-            else:
+        if hasattr(e, "conf") and e.conf is not None:
+            if knitpat.validate_dict(e.conf):
                 conf = e.conf
+            else:
+                conf = self.generate_test_configuration()
+
         else:
             conf = self.generate_test_configuration()
 
@@ -54,7 +73,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         logging.debug("Working with final conf: {}".format(e.conf))
 
         script_dir = os.path.dirname(os.path.abspath(__file__))  # Temp fix for testing Image opening
-        pil_image = Image.open(os.path.join(script_dir, conf["filename"]))
+        pil_image = Image.open(os.path.join(script_dir, conf["file_url"]))
 
         try:
             self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
@@ -109,30 +128,29 @@ class AyabPluginControl(BaseKnittingPlugin):
 
     def __wait_for_user_action(self, message="", message_type="info"):
         """Waits for the user to react, blocking it."""
+        self.interactive_callbacks["blocking_user_action"](message, message_type)
         # TODO: should be replaced by self.interactive_callbacks["user_action"]
-        logging.info(message)
-        time.sleep(3)
-        raw_input()
-        pass
+        # logging.info(message)
+        # time.sleep(3)
+        # raw_input()
+        # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('display_blocking_pop_up_signal(QString, QString)'), message, message_type)
 
     def __notify_user(self, message="", message_type="info"):
-        """Sends the display_pop_up_signal QtSignal to main GUI thread, not blocking it."""
+        """Sends the a notification without blocking."""
+        self.interactive_callbacks["message"](message, message_type)
         # TODO: should be replaced by self.interactive_callbacks["info"]
-        logging.info(message)
-        pass
+        # logging.info(message)
+        # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
 
     def __emit_progress(self, percent, done, total):
         """Shows the current job progress."""
+        self.interactive_callbacks["progress"](percent, done, total)
         # TODO: should be replaced by self.interactive_callbacks["progress"]
-        logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
-        pass
+        # logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
+        # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
-
-    def setup_behaviour_ui(self):
-        """Connects methods to UI elements."""
-        pass
 
     def generate_test_configuration(self):
         """Creates a configuration dict from the ui elements.
@@ -165,28 +183,18 @@ class AyabPluginControl(BaseKnittingPlugin):
         conf["inf_repeat"] = 0
         conf["machine_type"] = "single"
 
-        serial_port = u"/dev/ttyACM0"
-        conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
+        # serial_port = u"/dev/ttyACM0"
+        # conf["portname"] = serial_port  # Should be related to self.getSerialPorts()[0][0]
+        self.set_port()
         # getting file location from textbox
         filename_text = u"mushroom.png"
-        conf["filename"] = filename_text
+        conf["file_url"] = filename_text
         logging.debug(conf)
         # TODO: Add more config options.
         return conf
 
-    def __init__(self):
-        super(AyabPluginControl, self).__init__()
-        # KnittingPlugin.__init__(self)
-
-        # From AYAB's ayab_control
-        self.__API_VERSION = 0x03
-        self.__ayabCom = AyabCommunication()
-
-        self.__formerRequest = 0
-        self.__lineBlock = 0
-
-    def __del__(self):
-        self.__close_serial()
+    def set_port(self, port_name=u"/dev/ttyACM0"):
+        self.conf["portname"] = port_name
 
     # From ayab_control
     #####################################
@@ -325,6 +333,8 @@ class AyabPluginControl(BaseKnittingPlugin):
                     logging.debug("COLOR" + str(color))
                 else:
                     sendBlankLine = True
+
+                lenImgExpanded = len(self.__image.imageExpanded())
 
                 # TODO Check assignment
                 if imgRow == imgHeight - 1 \
