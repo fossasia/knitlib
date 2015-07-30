@@ -27,9 +27,10 @@ class KnittingJob(object):
 
     def get_job_public_dict(self):
         return {
-            "id" : str(self.id),
+            "id": str(self.id),
             "plugin_type": self.__plugin_class.__PLUGIN_NAME__,
             "port": str(self.__port),
+            # "state": str(self.__plugin.current),
             "knitpat_file": self.__knitpat_dict
         }
 
