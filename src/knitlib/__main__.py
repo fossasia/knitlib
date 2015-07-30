@@ -21,6 +21,7 @@ import click
 import knitlib
 import logging
 import knitpat
+import knitting_job
 # Why does this file exist, and why __main__?
 # For more info, read:
 # - https://www.python.org/dev/peps/pep-0338/
@@ -50,10 +51,10 @@ def main(plugin_name, config, port):
         print("The plugin selected is not available. Available plugins are: {}".
               format(knitlib.machine_handler.get_active_machine_plugins_names()))
         return -2
-    machine_instance = plugin()
-    machine_instance.configure(conf=knitpat_dict)
-    machine_instance.knit()
-    machine_instance.finish()
+    knitting_job_instance = knitting_job.KnittingJob(plugin, port)
+    knitting_job_instance.init_job()
+    knitting_job_instance.configure_job(knitpat_dict)
+    knitting_job_instance.knit_job()
     return 0
 
 if __name__ == "__main__":

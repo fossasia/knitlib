@@ -29,7 +29,7 @@ class KnittingJob(object):
         self.__plugin = self.__plugin_class()
         assert self.__plugin.current == "activated"
         self.__plugin.set_port(self.__port)
-        if self.__callbacks_dict is not None:
+        if self.__callback_dict is not None:
             self.__plugin.register_interactive_callbacks(self.__callback_dict)
 
     def configure_job(self, knitpat_dict=None):
