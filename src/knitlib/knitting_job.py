@@ -25,6 +25,14 @@ class KnittingJob(object):
     def get_status(self):
         return self.__plugin.current
 
+    def get_job_public_dict(self):
+        return {
+            "id" : str(self.id),
+            "plugin_type": self.__plugin_class.__PLUGIN_NAME__,
+            "port": str(self.__port),
+            "knitpat_file": self.__knitpat_dict
+        }
+
     def init_job(self):
         self.__plugin = self.__plugin_class()
         assert self.__plugin.current == "activated"
