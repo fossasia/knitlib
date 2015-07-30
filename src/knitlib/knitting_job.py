@@ -26,11 +26,12 @@ class KnittingJob(object):
         return self.__plugin.current
 
     def get_job_public_dict(self):
+        plugin_state = self.__plugin.current if self.__plugin else "none"
         return {
             "id": str(self.id),
             "plugin_type": self.__plugin_class.__PLUGIN_NAME__,
             "port": str(self.__port),
-            # "state": str(self.__plugin.current),
+            "state": plugin_state,
             "knitpat_file": self.__knitpat_dict
         }
 
