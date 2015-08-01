@@ -39,6 +39,6 @@ def mkfat12(opts, files):
     offs = accum((blocks(l, 512) for l in lens), 2)
     """ FAT encoding """
     fat = n2bytes(nybbles((b in offs) and 0xfff or b
-                    for b in range(1, offs[-1] + 1)))
+    for b in range(1, offs[-1] + 1)))
     mkimg(param('-o', "a.raw"), [(0, [open(param('-b', "mbr.raw")).read()]), (1, fat), (10, fat), (19, [dirent(*e) for e in zip(files, offs, lens)])] +
-           [(31 + o, [c]) for o, c in zip(offs, contents)] + [(int(param('-s', "2880")) - 1, [pack('512x')])])
+    [(31 + o, [c]) for o, c in zip(offs, contents)] + [(int(param('-s', "2880")) - 1, [pack('512x')])])
