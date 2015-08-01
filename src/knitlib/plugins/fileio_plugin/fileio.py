@@ -33,12 +33,12 @@ def mkfat12(opts, files):
 
     param = opts.get
     """ file data retrieval contents"""
-    cont = [file(f).read() for f in files]
-    lens = [len(c) for c in cont]
+    con = [file(f).read() for f in files]
+    lens = [len(c) for c in con]
     """ offset calculating """
-    offs = accum((blocks(l, 512) for l in lens), 2)
+    ofs = accum((blocks(l, 512) for l in lens), 2)
     """ FAT encoding """
-    fat = n2bytes(nybbles((b in offs) and 0xfff or b for b in range(1, offs[-1] + 1)))
+    fat = n2bytes(nybbles((b in ofs) and 0xfff or b for b in range(1, ofs[-1] + 1)))
     fn = param('-o', "a.raw")
     op = open(param('-b', "mbr.raw")).read()
     """ parameter """
@@ -46,4 +46,4 @@ def mkfat12(opts, files):
     """ integer value of parameter"""
     ip = int(para) - 1
     pax = pack('512x')
-    mkimg(fn, [(0, [op]), (1, fat), (10, fat), (19, [dirent(*e) for e in zip(files, offs, lens)])] + [(31 + o, [c]) for o, c in zip(offs, cont)] + [(ip, [pax])])
+    mkimg(fn, [(0, [op]), (1, fat), (10, fat), (19, [dirent(*e) for e in zip(files, ofs, lens)])] + [(31 + o, [c]) for o, c in zip(ofs, con)] + [(ip, [pax])])
