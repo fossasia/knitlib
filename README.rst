@@ -59,7 +59,7 @@ knitlib
 
 A library designed to support the operation of varied knitting machines, mechanisms, and hacks.
 
-Projects like Ayab and Knitic access knitting machines. The AYAB has already created a plugin system for knitting machines and implemented talking to Brother KH 910/930 models. The software is based on Python and QT. The primary task is to develop a library based on this solution to add support for more machines.
+Knitlib is based on projects like AYAB, PDD, and KnitterStream to control knitting machines. Knitlib features a plugin system for knitting machines and implements an API to control machines' operation, knitting jobs and knitting patterns. The software is based on Python. There also is a Web API. Among the primary tasks is to develop plugins based on this solution to add support for more machines.
 
 Free software: GPLv3+ license
 
