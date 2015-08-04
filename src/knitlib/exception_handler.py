@@ -21,9 +21,9 @@ class Error(Exception):
     """Base class for exceptions in this module."""
     pass
 
+
 class InputError(Error):
     """Exception raised for errors in the input.
-    
     Attributes:
         expression -- input expression in which
                           the error occurred
@@ -33,6 +33,7 @@ class InputError(Error):
         self.expression = expression
         self.message = message
 
+
 class CommunicationException(Exception):
-    """Exception raised for errors in the input."""
+    """Exception raised for errors in the communication."""
     pass
