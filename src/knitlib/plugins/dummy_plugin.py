@@ -38,6 +38,7 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
     for i in range(total):
       time.sleep(1)
       self.interactive_callbacks["progress"](i / float(total), i, total)
+    self.finish()
 
   def onfinish(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onfinish"))
