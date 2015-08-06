@@ -57,7 +57,7 @@ class PatternNotFoundException(Error):
         self.expression = expression
         self.message = message
 
-        
+
 class InsertPatternException(Error):
     """Exception raised for errors in the insert of the pattern.
     Attributes:
@@ -81,7 +81,7 @@ class SendDataException(Error):
         self.expression = expression
         self.message = message
 
-        
+
 class OpenSerialException(Error):
     """Exception raised for errors in opening the serial port.
     Attributes:
@@ -93,7 +93,7 @@ class OpenSerialException(Error):
         self.expression = expression
         self.message = message
 
-        
+
 class CloseSerialException(Error):
     """Exception raised for errors in closing the serial port.
     Attributes:
