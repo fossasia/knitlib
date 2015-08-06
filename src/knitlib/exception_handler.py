@@ -56,7 +56,7 @@ class PatternNotFoundException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
         
 class InsertPatternException(Error):
     """Exception raised for errors in the insert of the pattern.
@@ -68,7 +68,7 @@ class InsertPatternException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
 
 class SendDataException(Error):
     """Exception raised for errors in sending data to the serial port.
@@ -80,7 +80,7 @@ class SendDataException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
         
 class OpenSerialException(Error):
     """Exception raised for errors in opening the serial port.
@@ -92,7 +92,7 @@ class OpenSerialException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
         
 class CloseSerialException(Error):
     """Exception raised for errors in closing the serial port.
@@ -104,7 +104,7 @@ class CloseSerialException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
 
 class ReadLineException(Error):
     """Exception raised for errors in reading lines.
@@ -116,7 +116,7 @@ class ReadLineException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
 
 class WriteLineException(Error):
     """Exception raised for errors in writing lines.
@@ -128,7 +128,7 @@ class WriteLineException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
 
 class ReadByteException(Error):
     """Exception raised for errors in reading bytes.
@@ -140,7 +140,7 @@ class ReadByteException(Error):
     def __init__(self, expression, message):
         self.expression = expression
         self.message = message
-        
+
 
 class WriteByteException(Error):
     """Exception raised for errors in writing bytes.
