@@ -108,6 +108,11 @@ class BaseKnittingPlugin(Fysom):
         """Logs progress percentage and lines of current job."""
         logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
 
+    @property
+    def supported_config_features(self):
+        raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
+            "supported_config_features must be defined. It returns the available configuration options."))
+
     def __init__(self, callbacks_dict=None, interactive_callbacks=None):
         self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implement {0}"
         """Interactive callbacks handle Plugin-Frontend interaction hooks."""
