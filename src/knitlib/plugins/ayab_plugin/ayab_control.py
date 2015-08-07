@@ -76,7 +76,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         pil_image = Image.open(os.path.join(script_dir, conf["file_url"]))
 
         try:
-            self.__image = ayab_image.ayabImage(pil_image, self.conf["num_colors"])
+            self.__image = ayab_image.ayabImage(pil_image, self.conf["colors"])
         except:
             self.__notify_user("You need to set an image.", "error")
             return
@@ -178,7 +178,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         """
 
         conf = {}
-        conf[u"num_colors"] = 2
+        conf[u"colors"] = 2
         conf[u"start_line"] = 0
 
         start_needle_color = stop_needle_color = u"orange"  # or green.
@@ -421,7 +421,7 @@ class AyabPluginControl(BaseKnittingPlugin):
         self.__image = pImage
         self.__startLine = pImage.startLine()
 
-        self.__numColors = pOptions["num_colors"]
+        self.__numColors = pOptions["colors"]
         self.__machineType = pOptions["machine_type"]
         self.__infRepeat = pOptions["inf_repeat"]
 
