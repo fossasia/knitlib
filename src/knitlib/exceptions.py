@@ -19,7 +19,7 @@
 
 class KnittingError(Exception):
     """Base class for exceptions in this module."""
-    def __init__(self, expression, message):
+    def __init__(self, expression="", message=""):
         self.expression = expression
         self.message = message
 
