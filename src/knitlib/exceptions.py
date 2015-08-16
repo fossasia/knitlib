@@ -17,12 +17,12 @@
 #    Copyright 2015 Sebastian Oliva, Shiluka Dharmasena <http://github.com/fashiontec/knitlib>
 
 
-class Error(Exception):
+class KnittingError(Exception):
     """Base class for exceptions in this module."""
     pass
 
 
-class InputException(Error):
+class InputException(KnittingError):
     """Exception raised for errors in the input.
     Attributes:
         expression -- input expression in which
@@ -34,7 +34,7 @@ class InputException(Error):
         self.message = message
 
 
-class CommunicationException(Error):
+class CommunicationException(KnittingError):
     """Exception raised for errors in the communication.
     Attributes:
         expression -- communication expression in which
@@ -46,7 +46,7 @@ class CommunicationException(Error):
         self.message = message
 
 
-class PatternNotFoundException(Error):
+class PatternNotFoundException(KnittingError):
     """Exception raised for errors in the pattern.
     Attributes:
         expression -- pattern expression in which
@@ -58,7 +58,7 @@ class PatternNotFoundException(Error):
         self.message = message
 
 
-class InsertPatternException(Error):
+class InsertPatternException(KnittingError):
     """Exception raised for errors in the insert of the pattern.
     Attributes:
         expression -- insert pattern expression in which
@@ -70,7 +70,7 @@ class InsertPatternException(Error):
         self.message = message
 
 
-class SendDataException(Error):
+class SendDataException(KnittingError):
     """Exception raised for errors in sending data to the serial port.
     Attributes:
         expression -- send data expression in which
@@ -82,7 +82,7 @@ class SendDataException(Error):
         self.message = message
 
 
-class OpenSerialException(Error):
+class OpenSerialException(KnittingError):
     """Exception raised for errors in opening the serial port.
     Attributes:
         expression -- open serial port expression in which
@@ -94,7 +94,7 @@ class OpenSerialException(Error):
         self.message = message
 
 
-class CloseSerialException(Error):
+class CloseSerialException(KnittingError):
     """Exception raised for errors in closing the serial port.
     Attributes:
         expression -- close serial port expression in which
@@ -106,7 +106,7 @@ class CloseSerialException(Error):
         self.message = message
 
 
-class ReadLineException(Error):
+class ReadLineException(KnittingError):
     """Exception raised for errors in reading lines.
     Attributes:
         expression -- send data expression in which
@@ -118,7 +118,7 @@ class ReadLineException(Error):
         self.message = message
 
 
-class WriteLineException(Error):
+class WriteLineException(KnittingError):
     """Exception raised for errors in writing lines.
     Attributes:
         expression -- write lines expression in which
@@ -130,7 +130,7 @@ class WriteLineException(Error):
         self.message = message
 
 
-class ReadByteException(Error):
+class ReadByteException(KnittingError):
     """Exception raised for errors in reading bytes.
     Attributes:
         expression -- read data as bytes expression in which
@@ -142,7 +142,7 @@ class ReadByteException(Error):
         self.message = message
 
 
-class WriteByteException(Error):
+class WriteByteException(KnittingError):
     """Exception raised for errors in writing bytes.
     Attributes:
         expression -- write data as byte expression in which
