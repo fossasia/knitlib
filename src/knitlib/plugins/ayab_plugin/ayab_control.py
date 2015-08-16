@@ -96,6 +96,23 @@ class AyabPluginControl(BaseKnittingPlugin):
         # self.__parent_ui.resetUI()
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), 0, 0, 0)
 
+    @property
+    def supported_config_features(self):
+        return {
+            "$schema": "http://json-schema.org/schema#",
+            "type": "object",
+            "properties": {
+                "start_needle": {"type": "integer"},
+                "stop_needle": {"type": "integer"},
+                "start_line": {"type": "integer"},
+                "machine_type": {"type": "string",
+                                 "enum": ["single", "double"]},
+                "alignment": {"type": "string",
+                              "enum": ["left", "center", "right"]},
+                "inf_repeat": {"type": "integer"}
+            }
+        }
+
     def cancel(self):
         self._knitImage = False
         # self.finish()
