@@ -19,7 +19,9 @@
 
 class KnittingError(Exception):
     """Base class for exceptions in this module."""
-    pass
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
 
 
 class InputException(KnittingError):
@@ -29,9 +31,7 @@ class InputException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class CommunicationException(KnittingError):
@@ -41,9 +41,7 @@ class CommunicationException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class PatternNotFoundException(KnittingError):
@@ -53,9 +51,7 @@ class PatternNotFoundException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class InsertPatternException(KnittingError):
@@ -65,9 +61,7 @@ class InsertPatternException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class SendDataException(KnittingError):
@@ -77,9 +71,7 @@ class SendDataException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class OpenSerialException(KnittingError):
@@ -89,9 +81,7 @@ class OpenSerialException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class CloseSerialException(KnittingError):
@@ -101,9 +91,7 @@ class CloseSerialException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class ReadLineException(KnittingError):
@@ -113,9 +101,7 @@ class ReadLineException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class WriteLineException(KnittingError):
@@ -125,9 +111,7 @@ class WriteLineException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class ReadByteException(KnittingError):
@@ -137,9 +121,7 @@ class ReadByteException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
+    pass
 
 
 class WriteByteException(KnittingError):
@@ -149,7 +131,4 @@ class WriteByteException(KnittingError):
                           the error occurred
         message -- explanation of the error
     """
-    def __init__(self, expression, message):
-        self.expression = expression
-        self.message = message
-
+    pass
