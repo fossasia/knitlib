@@ -52,6 +52,6 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
   def set_port(self, *args, **kwargs):
     pass
 
-  @property
-  def supported_config_features(self):
+  @staticmethod
+  def supported_config_features():
     return {"$schema": "http://json-schema.org/schema#", "type": "object"}

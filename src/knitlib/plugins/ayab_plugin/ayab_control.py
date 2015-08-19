@@ -96,8 +96,8 @@ class AyabPluginControl(BaseKnittingPlugin):
         # self.__parent_ui.resetUI()
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), 0, 0, 0)
 
-    @property
-    def supported_config_features(self):
+    @staticmethod
+    def supported_config_features():
         return {
             "$schema": "http://json-schema.org/schema#",
             "type": "object",
