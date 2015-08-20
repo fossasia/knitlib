@@ -48,5 +48,9 @@ class KnittingJob(object):
         self.__plugin.configure(knitpat_dict)
 
     def knit_job(self):
-        # TODO: ensure plugin.knit is called asynchronously.
+        """Blocking knitting job operation.
+
+        Be sure to call knit_job in an async context, or as a greenlet spawn.
+        """
+        # TODO: Add exception handling.
         self.__plugin.knit()
