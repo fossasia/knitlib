@@ -10,3 +10,13 @@ Fundamental Abstractions: A Finite State Machine for Knitting Machines
 ======================================================================
 
 Center to all abstractions in Knitlib is the Knitting Finite State Machine, defined at knitlib/plugins/knitting_plugin.py
+BaseKnittingPlugin is a simple plugin base that offers several commodities for the handling of the knitting flow.
+Function such as onconfigure, onknit and onfinish are used to setup the plugin and to operate it.
+
+
+Documentation improvements
+==========================
+
+knitlib could always use more documentation, whether as part of the
+official knitlib docs, in docstrings, or even on the web in blog posts,
+articles, and such.
