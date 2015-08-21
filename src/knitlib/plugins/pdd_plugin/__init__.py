@@ -33,7 +33,7 @@ class PDDEmulationKnittingPlugin(BaseKnittingPlugin):
         if hasattr(e, "conf") and e.conf is not None:
             self.__conf = e.conf
         else:
-            raise knitlib.exceptions.InputException()
+            raise knitlib.exceptions.InputException("Conf dict is missing")
 
         conf = self.__conf
         self.__port = conf.get("port", "/dev/ttyUSB0")
