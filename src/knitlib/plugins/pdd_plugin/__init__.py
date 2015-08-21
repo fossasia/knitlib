@@ -29,6 +29,9 @@ class PDDEmulationKnittingPlugin(BaseKnittingPlugin):
     def register_interactive_callbacks(self, callbacks=None):
         super(PDDEmulationKnittingPlugin, self).register_interactive_callbacks(callbacks)
 
+    def set_port(self, portname):
+        self.__port = portname
+
     def onconfigure(self, e):
         if hasattr(e, "conf") and e.conf is not None:
             self.__conf = e.conf
@@ -36,7 +39,8 @@ class PDDEmulationKnittingPlugin(BaseKnittingPlugin):
             raise knitlib.exceptions.InputException("Conf dict is missing")
 
         conf = self.__conf
-        self.__port = conf.get("port", "/dev/ttyUSB0")
+        if self.__port is "":
+            self.__port = conf.get("port", "/dev/ttyUSB0")
 
         try:
             os.mkdir(self.__folder)
