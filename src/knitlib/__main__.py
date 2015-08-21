@@ -34,8 +34,9 @@ name = "knitlib"
 @click.command()
 @click.option('--plugin_name', default="dummy",  # pPluginType prompt='Name of the Machine Plugin you want.',
               help='The name of the Machine Plugin you want.')
-@click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]))
-@click.option('--port', type=unicode)
+@click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]), help="Arguments tuples for the "
+                                                                                             "selected plugin")
+@click.option('--port', type=unicode, help="Serial Port")
 def main(plugin_name, config, port):
     logging.basicConfig(level=logging.DEBUG)
     logging.debug("Config got as object {0}".format(config))
