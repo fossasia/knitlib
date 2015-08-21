@@ -38,6 +38,8 @@ class AyabPluginControl(BaseKnittingPlugin):
         # From AYAB's ayab_control
         self.__API_VERSION = 0x03
         self.__ayabCom = AyabCommunication()
+        self.conf = {}
+        self.__portname = ""
 
         self.__formerRequest = 0
         self.__lineBlock = 0
@@ -139,15 +141,14 @@ class AyabPluginControl(BaseKnittingPlugin):
             self.__notify_user("Start Line is larger than the image.")
             return False
 
-        if conf.get("portname") == '':
-            self.__notify_user("Please choose a valid port.")
-            return False
+        # if conf.get("portname") == '':
+        #     self.__notify_user("Please choose a valid port.")
+        #     return False
         return True
 
     def __wait_for_user_action(self, message="", message_type="info"):
         """Waits for the user to react, blocking it."""
         self.interactive_callbacks["blocking_user_action"](message, message_type)
-        # TODO: should be replaced by self.interactive_callbacks["user_action"]
         # logging.info(message)
         # time.sleep(3)
         # raw_input()
@@ -157,7 +158,6 @@ class AyabPluginControl(BaseKnittingPlugin):
     def __notify_user(self, message="", message_type="info"):
         """Sends the a notification without blocking."""
         self.interactive_callbacks["message"](message, message_type)
-        # TODO: should be replaced by self.interactive_callbacks["info"]
         # logging.info(message)
         # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('display_pop_up_signal(QString, QString)'), message, message_type)
@@ -165,7 +165,6 @@ class AyabPluginControl(BaseKnittingPlugin):
     def __emit_progress(self, percent, done, total):
         """Shows the current job progress."""
         self.interactive_callbacks["progress"](percent, done, total)
-        # TODO: should be replaced by self.interactive_callbacks["progress"]
         # logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
         # pass
         # self.__parent_ui.emit(QtCore.SIGNAL('updateProgress(int,int,int)'), int(percent), int(done), int(total))
@@ -211,8 +210,8 @@ class AyabPluginControl(BaseKnittingPlugin):
         # TODO: Add more config options.
         return conf
 
-    def set_port(self, port_name=u"/dev/ttyACM0"):
-        self.conf["portname"] = port_name
+    def set_port(self, portname=u"/dev/ttyACM0"):
+        self.__portname = portname
 
     # From ayab_control
     #####################################
@@ -422,15 +421,15 @@ class AyabPluginControl(BaseKnittingPlugin):
         self.__image = pImage
         self.__startLine = pImage.startLine()
 
-        self.__numColors = pOptions["colors"]
-        self.__machineType = pOptions["machine_type"]
-        self.__infRepeat = pOptions["inf_repeat"]
+        self.__numColors = pOptions.get("colors",2)
+        self.__machineType = pOptions.get("machine_type","single")
+        self.__infRepeat = pOptions.get("inf_repeat", False)
 
         API_VERSION = self.__API_VERSION
         curState = 's_init'
         oldState = 'none'
 
-        if not self.__ayabCom.open_serial(pOptions["portname"]):
+        if not self.__ayabCom.open_serial(self.__portname):
             logging.error("Could not open serial port")
             return
 
