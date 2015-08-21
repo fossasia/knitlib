@@ -109,7 +109,8 @@ class AyabPluginControl(BaseKnittingPlugin):
                                  "enum": ["single", "double"]},
                 "alignment": {"type": "string",
                               "enum": ["left", "center", "right"]},
-                "inf_repeat": {"type": "integer"}
+                "inf_repeat": {"type": "integer"},
+                "port": {"type": "string"}
             }
         }
 
