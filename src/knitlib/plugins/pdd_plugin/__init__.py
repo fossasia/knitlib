@@ -57,9 +57,9 @@ class PDDEmulationKnittingPlugin(BaseKnittingPlugin):
         self.__emu = PDDemulator(self.__folder)
 
     def onknit(self, e):
-        emu.open(self.__port)
+        self.__emu.open(cport=self.__port)
         logging.info("PDD Emulator Ready")
-        emu.handleRequests()
+        self.__emu.handleRequests()
 
     def validate_configuration(self, conf):
         # TODO validate formally
@@ -67,7 +67,7 @@ class PDDEmulationKnittingPlugin(BaseKnittingPlugin):
 
     def onfinish(self, e):
         # TODO: remove and cleanup dir at self.__folder
-        emu.close()
+        self.__emu.close()
 
     @staticmethod
     def supported_config_features():
