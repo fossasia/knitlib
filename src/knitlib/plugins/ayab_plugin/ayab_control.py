@@ -421,8 +421,8 @@ class AyabPluginControl(BaseKnittingPlugin):
         self.__image = pImage
         self.__startLine = pImage.startLine()
 
-        self.__numColors = pOptions.get("colors",2)
-        self.__machineType = pOptions.get("machine_type","single")
+        self.__numColors = pOptions.get("colors", 2)
+        self.__machineType = pOptions.get("machine_type", "single")
         self.__infRepeat = pOptions.get("inf_repeat", False)
 
         API_VERSION = self.__API_VERSION

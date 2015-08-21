@@ -45,7 +45,6 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
 
   def onconfigure(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onconfigure"))
-    logging.debug(e.conf)
 
   def set_port(self, *args, **kwargs):
     pass
