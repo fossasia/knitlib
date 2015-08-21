@@ -52,14 +52,14 @@ class BaseKnittingPlugin(Fysom):
 
     @abc.abstractmethod
     def onconfigure(self, e):
-        """Callback when state machine executes configure(options={})
+        """Callback when state machine executes configure(conf={})
 
         This state gets called to configure the plugin for knitting. It can either
         be called when first configuring the plugin, when an error happened and a
         reset is necessary.
 
         Args:
-          options: An object holding an options dict.
+          e: An event object holding a conf dict.
         """
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "onconfigure. It is used to configure the knitting plugin before starting."))
@@ -70,8 +70,10 @@ class BaseKnittingPlugin(Fysom):
             "validate_configuration must be defined. It verifies configurations are valid."))
 
     @abc.abstractmethod
-    def set_port(self, port_name):
+    def set_port(self, portname):
         """Sets a port name before configuration method."""
+        raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
+            "set_port must be defined."))
 
     def register_interactive_callbacks(self, callbacks=None):
         """Serves to register a dict of callbacks that require interaction by the User,
