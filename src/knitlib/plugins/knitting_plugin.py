@@ -28,6 +28,8 @@ class BaseKnittingPlugin(Fysom):
     Subclasses inherit the basic State Machine defined in __init__.
     """
 
+    __NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implement {0}"
+
     @abc.abstractmethod
     def onknit(self, e):
         """Callback when state machine executes knit().
@@ -50,22 +52,17 @@ class BaseKnittingPlugin(Fysom):
 
     @abc.abstractmethod
     def onconfigure(self, e):
-        """Callback when state machine executes configure(options={})
+        """Callback when state machine executes configure(conf={})
 
         This state gets called to configure the plugin for knitting. It can either
         be called when first configuring the plugin, when an error happened and a
         reset is necessary.
 
         Args:
-          options: An object holding an options dict.
+          e: An event object holding a conf dict.
         """
         raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
             "onconfigure. It is used to configure the knitting plugin before starting."))
-
-    @abc.abstractmethod
-    def publish_options(self):
-        raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
-            "publish_options must be defined. It is used to expose the possible knitting options."))
 
     @abc.abstractmethod
     def validate_configuration(self, conf):
@@ -73,8 +70,10 @@ class BaseKnittingPlugin(Fysom):
             "validate_configuration must be defined. It verifies configurations are valid."))
 
     @abc.abstractmethod
-    def set_port(self, port_name):
+    def set_port(self, portname):
         """Sets a port name before configuration method."""
+        raise NotImplementedError(self.__NOT_IMPLEMENTED_ERROR.format(
+            "set_port must be defined."))
 
     def register_interactive_callbacks(self, callbacks=None):
         """Serves to register a dict of callbacks that require interaction by the User,
@@ -108,8 +107,13 @@ class BaseKnittingPlugin(Fysom):
         """Logs progress percentage and lines of current job."""
         logging.info("Knitting at {}% . {} out of {}.".format(percent, done, total))
 
+    @staticmethod
+    def supported_config_features():
+        """Returns a JSON schema dict with the available features for the given machine plugin."""
+        raise NotImplementedError(BaseKnittingPlugin.__NOT_IMPLEMENTED_ERROR.format(
+            "supported_config_features must be defined. It returns a JSON Schema with available configuration options."))
+
     def __init__(self, callbacks_dict=None, interactive_callbacks=None):
-        self.__NOT_IMPLEMENTED_ERROR = "Classes that inherit from KnittingPlugin should implement {0}"
         """Interactive callbacks handle Plugin-Frontend interaction hooks."""
         self.interactive_callbacks = {}
 

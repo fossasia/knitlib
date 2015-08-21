@@ -20,6 +20,7 @@
 import pytest
 import serial
 import unittest
+from knitlib.exceptions import CommunicationException
 from knitlib.plugins.ayab_plugin.ayab_communication import AyabCommunication
 from mock import patch
 
@@ -47,11 +48,10 @@ class TestCommunication(unittest.TestCase):
       mock_method.assert_called_once_with('dummyPortname',115200)
 
     with patch.object(serial,'Serial') as mock_method:
-      with pytest.raises(Exception) as excinfo:
+      with pytest.raises(CommunicationException) as excinfo:
         mock_method.side_effect = serial.SerialException()
         self.ayabCom = AyabCommunication()
         openStatus = self.ayabCom.open_serial('dummyPortname')
-      assert "CommunicationException" in str(excinfo.type)
       mock_method.assert_called_once_with('dummyPortname',115200)
 
   def test_req_start(self):

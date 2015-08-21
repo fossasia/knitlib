@@ -21,6 +21,7 @@ import click
 import knitlib
 import logging
 import knitpat
+import knitting_job
 # Why does this file exist, and why __main__?
 # For more info, read:
 # - https://www.python.org/dev/peps/pep-0338/
@@ -33,8 +34,9 @@ name = "knitlib"
 @click.command()
 @click.option('--plugin_name', default="dummy",  # pPluginType prompt='Name of the Machine Plugin you want.',
               help='The name of the Machine Plugin you want.')
-@click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]))
-@click.option('--port', type=unicode)
+@click.option('--config', multiple=True, nargs=2, type=click.Tuple([unicode, unicode]), help="Arguments tuples for the "
+                                                                                             "selected plugin")
+@click.option('--port', type=unicode, help="Serial Port")
 def main(plugin_name, config, port):
     logging.basicConfig(level=logging.DEBUG)
     logging.debug("Config got as object {0}".format(config))
@@ -50,10 +52,10 @@ def main(plugin_name, config, port):
         print("The plugin selected is not available. Available plugins are: {}".
               format(knitlib.machine_handler.get_active_machine_plugins_names()))
         return -2
-    machine_instance = plugin()
-    machine_instance.configure(conf=knitpat_dict)
-    machine_instance.knit()
-    machine_instance.finish()
+    knitting_job_instance = knitting_job.KnittingJob(plugin, port)
+    knitting_job_instance.init_job()
+    knitting_job_instance.configure_job(knitpat_dict)
+    knitting_job_instance.knit_job()
     return 0
 
 if __name__ == "__main__":

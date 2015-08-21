@@ -38,6 +38,7 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
     for i in range(total):
       time.sleep(1)
       self.interactive_callbacks["progress"](i / float(total), i, total)
+    self.finish()
 
   def onfinish(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onfinish"))
@@ -45,8 +46,9 @@ class DummyKnittingPlugin(knitting_plugin.BaseKnittingPlugin):
   def onconfigure(self, e):
     logging.debug(DummyKnittingPlugin.base_log_string.format("onconfigure"))
 
-  def publish_options(self):
-    logging.debug(DummyKnittingPlugin.base_log_string.format("pub options"))
-
   def set_port(self, *args, **kwargs):
     pass
+
+  @staticmethod
+  def supported_config_features():
+    return {"$schema": "http://json-schema.org/schema#", "type": "object"}
