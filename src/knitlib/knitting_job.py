@@ -45,7 +45,7 @@ class KnittingJob(object):
     def configure_job(self, knitpat_dict=None):
         if knitpat_dict is None:
             knitpat_dict = self.__knitpat_dict
-        self.__plugin.configure(knitpat_dict)
+        self.__plugin.configure(conf=knitpat_dict)
 
     def knit_job(self):
         # TODO: ensure plugin.knit is called asynchronously.
