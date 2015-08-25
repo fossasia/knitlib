@@ -64,7 +64,8 @@ setup(
     version='0.0.1',
     license='GPLv3',
     description='A library designed to support varied knitting machines.',
-    long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
+    long_description_markdown_filename='README.md',
+    # long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
     author='Sebastian Oliva , Shiluka Dharmasena',
     author_email='code@sebastianoliva.com , shiluka@gmail.com',
     url='https://github.com/fashiontec/knitlib',
@@ -91,9 +92,8 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Utilities',
     ],
-    keywords=[
-        # eg: 'keyword1', 'keyword2', 'keyword3',
-    ],
+    keywords=['knitting', 'knitting machines', 'ayab', 'pdd'],
+    setup_requires = ['setuptools-markdown'],
     install_requires=[
         'click',
         'fysom',
