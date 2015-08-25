@@ -56,6 +56,7 @@ knitlib
 .. # |scrutinizer| image:: https://img.shields.io/scrutinizer/g/tian2992/knitlib/master.png?style=flat
     :alt: Scrutinizer Status
     :target: https://scrutinizer-ci.com/g/tian2992/knitlib/
+    
 =================
 1. What is Knitlib
 =================
@@ -66,6 +67,7 @@ Knitlib is a library designed to support the operation of varied knitting machin
 
 1.2 Technical Background of Knitlib
 ----------
+
 (Technology, Implementation etc.)
 
 =================
@@ -84,7 +86,9 @@ Knitlib is a library designed to support the operation of varied knitting machin
 =================
 
 To run the all tests run::
+
     tox
+    
 =================
 5. References
 =================
@@ -92,6 +96,7 @@ To run the all tests run::
 =================
 6. Documentation
 =================
+
 ..  https://knitlib.readthedocs.org/
 
 =================
@@ -114,4 +119,5 @@ To run the all tests run::
 =================
 9. License
 =================
+
 Free software: GPLv3+ license
