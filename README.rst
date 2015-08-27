@@ -68,7 +68,7 @@ Knitlib is a library designed to support the operation of varied knitting machin
 1.2 Technical Background of Knitlib
 -----------------------------------
 
-(Technology, Implementation etc.)
+Knitlib is implemented as a Python Library and API. Each machine is supported via a Plugin, allowing for extensibility. Each of the plugins is based on a simple Finite State Machine, with states from machine initialization to operation and knitting process. Among the aplications using the Knitlib API is Knitlib-server, implementing a Webserver and REST / WebSocket endpoints. Clients can also implement message callbacks, errors, notifications and blocking messages in order to provide a good user experience.
 
 ==========================
 2.Development Installation
@@ -111,13 +111,16 @@ Bugs can be reported via the Github issues tracker at https://github.com/fashion
 7.2 Documentation improvements
 ------------------------------
 
-7.3 Feature requests, bug reports, and feedback
+7.3 Feature requests, Issues, and Feedback
 -----------------------------------------------
+Issues, feature requests and feedback can be reported via the Github issues tracker at https://github.com/fashiontec/knitlib/issues
 
 
 
 7.4 Pull Request Guidelines
 ---------------------------
+
+
 
 =============================
 8. Applications using Knitlib
