@@ -56,27 +56,75 @@ knitlib
 .. # |scrutinizer| image:: https://img.shields.io/scrutinizer/g/tian2992/knitlib/master.png?style=flat
     :alt: Scrutinizer Status
     :target: https://scrutinizer-ci.com/g/tian2992/knitlib/
+    
+==================
+1. What is Knitlib
+==================
+Knitlib is a library designed to support the operation of varied knitting machines, mechanisms, and hacks. Knitlib is based on projects like AYAB, PDD, and KnitterStream to control knitting machines. Knitlib features a plugin system for knitting machines and implements an API to control machines' operation, knitting jobs and knitting patterns. The software is based on Python. There also is a Web API. Among the primary tasks is to develop plugins based on this solution to add support for more machines.
 
-A library designed to support the operation of varied knitting machines, mechanisms, and hacks.
+1.1 Idea behind Knitlib
+-----------------------
 
-Knitlib is based on projects like AYAB, PDD, and KnitterStream to control knitting machines. Knitlib features a plugin system for knitting machines and implements an API to control machines' operation, knitting jobs and knitting patterns. The software is based on Python. There also is a Web API. Among the primary tasks is to develop plugins based on this solution to add support for more machines.
+1.2 Technical Background of Knitlib
+-----------------------------------
 
-Free software: GPLv3+ license
+(Technology, Implementation etc.)
 
-Development Installation
-========================
+==========================
+2.Development Installation
+==========================
 
     pip install -r requirements.txt
     pip install knitlib
 
-Documentation
-=============
+========
+3. Usage
+========
 
-..  https://knitlib.readthedocs.org/
-
-Development
-===========
+==============
+4. Development
+==============
 
 To run the all tests run::
 
     tox
+    
+=============
+5. References
+=============
+
+================
+6. Documentation
+================
+
+..  https://knitlib.readthedocs.org/
+
+===============
+7. Contributing
+===============
+
+7.1. Bug reports
+----------------
+
+Bugs can be reported via the Github issues tracker at https://github.com/fashiontec/knitlib/issues
+
+7.2 Documentation improvements
+------------------------------
+
+7.3 Feature requests, bug reports, and feedback
+-----------------------------------------------
+
+
+
+7.4 Pull Request Guidelines
+---------------------------
+
+=============================
+8. Applications using Knitlib
+=============================
+
+==========
+9. License
+==========
+
+Free software: GPLv3+ license
