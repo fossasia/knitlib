@@ -127,4 +127,4 @@ Bugs can be reported via the Github issues tracker at https://github.com/fashion
 9. License
 ==========
 
-Free software: GPLv3+ license
+Free software: LGPLv3+ license
